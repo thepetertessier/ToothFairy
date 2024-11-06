@@ -127,7 +127,7 @@ public class ToothstalkerAI : MonoBehaviour
                 break;
         }
 
-        Debug.Log($"Set state: {currentState}");
+        // Debug.Log($"Set state: {currentState}");
     }
         
     private void Patrol() {

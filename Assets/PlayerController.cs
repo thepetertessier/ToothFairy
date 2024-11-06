@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 1f;
 
     private PlayerControls playerControls;
-    private Vector2 movement;
+    public Vector2 movement;
     private Rigidbody2D rb;
     private Animator animator;
 
@@ -39,14 +39,5 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move() {
         rb.MovePosition(rb.position + movement * (moveSpeed * Time.fixedDeltaTime));
-    }
-
-    private void UpdateAnimation() {
-        // Update the MoveX and MoveY parameters in the Animator
-        animator.SetFloat("MoveX", movement.x);
-        animator.SetFloat("MoveY", movement.y);
-
-        // Optional: Set a "isMoving" boolean if you want an idle animation when not moving
-        animator.SetBool("isMoving", movement != Vector2.zero);
     }
 }
