@@ -105,6 +105,14 @@ public class ToothstalkerAI : MonoBehaviour
 
         if (newState != ToothstalkerState.Alert) {
             eyes.SetActive(false);
+        } else {
+            eyes.SetActive(true);
+        }
+
+        if (newState == ToothstalkerState.Blinded) {
+            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.2f);
+        } else {
+            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
         }
 
         currentState = newState;
@@ -134,6 +142,7 @@ public class ToothstalkerAI : MonoBehaviour
                 break;
 
             case ToothstalkerState.Blinded:
+                currentTarget = GetRetreatTarget();
                 currentBehavior = Blinded;
                 break;
         }
@@ -235,35 +244,33 @@ public class ToothstalkerAI : MonoBehaviour
         PauseIfReachesCurrentTarget();
     }
 
-private void Blinded()
-{
-    // become slightly transparent
-    spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.2f);
+    private Vector3 GetRetreatTarget() {
+        // Calculate the retreat direction away from the player
+        Vector3 retreatDirection = (transform.position - player.position).normalized;
 
-    // Calculate the retreat direction away from the player
-    Vector3 retreatDirection = (transform.position - player.position).normalized;
+        // Calculate the perpendicular directions (rotated by 90 degrees)
+        Vector3 retreatRight = new Vector3(-retreatDirection.y, retreatDirection.x, 0).normalized; // 90 degrees right
+        Vector3 retreatLeft = new Vector3(retreatDirection.y, -retreatDirection.x, 0).normalized;  // 90 degrees left
 
-    // Calculate the perpendicular directions (rotated by 90 degrees)
-    Vector3 retreatRight = new Vector3(-retreatDirection.y, retreatDirection.x, 0).normalized; // 90 degrees right
-    Vector3 retreatLeft = new Vector3(retreatDirection.y, -retreatDirection.x, 0).normalized;  // 90 degrees left
+        // Determine which perpendicular direction is closer to the center (0, 0)
+        Vector3 rightDestination = transform.position + retreatRight;
+        Vector3 leftDestination = transform.position + retreatLeft;
 
-    // Determine which perpendicular direction is closer to the center (0, 0)
-    Vector3 rightDestination = transform.position + retreatRight;
-    Vector3 leftDestination = transform.position + retreatLeft;
+        // Choose the direction that gets closer to (0, 0)
+        Vector3 chosenDirection = (rightDestination.magnitude < leftDestination.magnitude) ? retreatRight : retreatLeft;
+        return transform.position + chosenDirection * 2f;
+    }
 
-    // Choose the direction that gets closer to (0, 0)
-    Vector3 chosenDirection = (rightDestination.magnitude < leftDestination.magnitude) ? retreatRight : retreatLeft;
+    private void Blinded() {
+        // Move in the chosen retreat direction
+        MoveTowards(currentTarget, baseSpeed * 6);
 
-    // Move in the chosen retreat direction
-    MoveTowards(transform.position + chosenDirection * 1.5f, baseSpeed * 4);
-
-    // Schedule return to patrol after retreating
-    Invoke(nameof(ReturnToPatrol), 0.5f);
-}
+        // Schedule return to patrol after retreating
+        Invoke(nameof(ReturnToPatrol), 0.5f);
+    }
 
     private void ReturnToPatrol()
     {
-        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
         SetState(ToothstalkerState.Patrolling);
     }
 

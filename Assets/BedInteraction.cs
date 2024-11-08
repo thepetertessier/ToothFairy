@@ -68,6 +68,7 @@ public class BedInteraction : MonoBehaviour {
             if (!isInteracting) {
                 isInteracting = true;
                 holdTime = 0f; // Reset hold time
+                playerMovement.TurnOffLight();
             }
 
             // Update the hold time and fill the loading bar
@@ -84,12 +85,14 @@ public class BedInteraction : MonoBehaviour {
             isInteracting = false;
             holdTime = 0f;
             loadingBarImage.fillAmount = 0f;
+            playerMovement.TurnOnLight();
         }
     }
 
     private void CompleteInteraction() {
         isSearched = true;
         loadingBarImage.gameObject.SetActive(false);
+        playerMovement.TurnOnLight();
 
         // darken to show it's been searched
         bedSpriteRenderer.color = new Color(0.688f, 0.523f, 0.523f, 1f);

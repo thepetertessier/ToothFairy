@@ -15,6 +15,7 @@ public enum PlayerDirection {
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private GameObject playerLight;
 
     private PlayerControls playerControls;
     public Vector2 movement;
@@ -27,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
         playerControls = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        flashlight = transform.GetChild(0).GetComponent<Transform>();
+        flashlight = transform.GetChild(0).GetChild(0).GetComponent<Transform>();
     }
 
     private void Start() {
@@ -109,5 +110,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move() {
         rb.MovePosition(rb.position + movement * (moveSpeed * Time.fixedDeltaTime));
+    }
+
+    public void TurnOffLight() {
+        playerLight.SetActive(false);
+    }
+
+    public void TurnOnLight() {
+        playerLight.SetActive(true);
     }
 }
