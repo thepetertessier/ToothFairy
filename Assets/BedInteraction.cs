@@ -5,9 +5,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class BedInteraction : MonoBehaviour {
-    [SerializeField] private float interactionTime = 2f;
+    [SerializeField] private float minInteractionTime = 3f;
+    [SerializeField] private float maxInteractionTime = 5f;
     [SerializeField] private Image loadingBarImage;
-
+    private float interactionTime;
     private bool isPlayerNearby = false;
     private float holdTime = 0f;
     private bool isInteracting = false;
@@ -47,10 +48,13 @@ public class BedInteraction : MonoBehaviour {
         return (playerIsLeftOfBed && playerIsFacingRight) || (!playerIsLeftOfBed && playerIsFacingLeft);
     }
 
+    private float getConcaveDownProgress(float percentDone) {
+        return 1 - Mathf.Pow(1 - percentDone, 2);
+    }
+
     private void Update() {
-        if (isSearched) {
+        if (isSearched)
             return;
-        }
         if (isPlayerNearby && PlayerIsActing() && PlayerIsFacingBed()) {
             FixLoadingBarPosition();
 
@@ -61,7 +65,7 @@ public class BedInteraction : MonoBehaviour {
 
             // Update the hold time and fill the loading bar
             holdTime += Time.deltaTime;
-            loadingBarImage.fillAmount = holdTime / interactionTime;
+            loadingBarImage.fillAmount = getConcaveDownProgress(holdTime / interactionTime);
 
             // Check if fully filled
             if (holdTime >= interactionTime) {
@@ -97,6 +101,7 @@ public class BedInteraction : MonoBehaviour {
     private void ActivateLoadingBar() {
         loadingBarImage.gameObject.SetActive(true);
         FixLoadingBarPosition();
+        interactionTime = Random.Range(minInteractionTime, maxInteractionTime);
     }
 
     private void FixLoadingBarPosition() {
