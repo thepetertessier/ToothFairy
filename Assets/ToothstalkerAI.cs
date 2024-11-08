@@ -125,6 +125,10 @@ public class ToothstalkerAI : MonoBehaviour
             case ToothstalkerState.Occupied:
                 currentBehavior = Occupied;
                 break;
+
+            case ToothstalkerState.Blinded:
+                currentBehavior = Blinded;
+                break;
         }
 
         // Debug.Log($"Set state: {currentState}");
@@ -223,13 +227,28 @@ public class ToothstalkerAI : MonoBehaviour
         PauseIfReachesCurrentTarget();
     }
 
-    private void Blinded()
-    {
-        // Add logic for moving away or hiding
-        Vector3 retreatDirection = (transform.position - player.position).normalized;
-        MoveTowards(transform.position + retreatDirection * 2f, baseSpeed*3);  // Move back a bit
-        Invoke(nameof(ReturnToPatrol), 0.5f);
-    }
+private void Blinded()
+{
+    // Calculate the retreat direction away from the player
+    Vector3 retreatDirection = (transform.position - player.position).normalized;
+
+    // Calculate the perpendicular directions (rotated by 90 degrees)
+    Vector3 retreatRight = new Vector3(-retreatDirection.y, retreatDirection.x, 0).normalized; // 90 degrees right
+    Vector3 retreatLeft = new Vector3(retreatDirection.y, -retreatDirection.x, 0).normalized;  // 90 degrees left
+
+    // Determine which perpendicular direction is closer to the center (0, 0)
+    Vector3 rightDestination = transform.position + retreatRight;
+    Vector3 leftDestination = transform.position + retreatLeft;
+
+    // Choose the direction that gets closer to (0, 0)
+    Vector3 chosenDirection = (rightDestination.magnitude < leftDestination.magnitude) ? retreatRight : retreatLeft;
+
+    // Move in the chosen retreat direction
+    MoveTowards(transform.position + chosenDirection * 1f, baseSpeed * 6);
+
+    // Schedule return to patrol after retreating
+    Invoke(nameof(ReturnToPatrol), 0.5f);
+}
 
     private void ReturnToPatrol()
     {
@@ -239,6 +258,9 @@ public class ToothstalkerAI : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player") && currentState != ToothstalkerState.Attacking){
             SetState(ToothstalkerState.Attacking);
+        } else if (other.CompareTag("FlashlightEdges")
+        && (currentState == ToothstalkerState.Pausing || currentState == ToothstalkerState.Patrolling)) {
+            SetState(ToothstalkerState.Blinded);
         }
     }
 
