@@ -1,8 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Scripting.APIUpdating;
+
+public enum PlayerDirection {
+    Up,
+    Right,
+    Down,
+    Left
+}
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 movement;
     private Rigidbody2D rb;
     private Animator animator;
+    private PlayerDirection direction = PlayerDirection.Down;
 
     private void Awake() {
         playerControls = new PlayerControls();
@@ -25,8 +34,51 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update() {
         PlayerInput();
-        animator.SetFloat("dy", movement.y);
-        animator.SetFloat("dx", movement.x);
+        UpdateDirection();
+        // animator.SetFloat("dy", movement.y);
+        // animator.SetFloat("dx", movement.x);
+    }
+
+    private void UpdateDirection() {
+        Array directions = Enum.GetValues(typeof(PlayerDirection));
+        foreach (PlayerDirection dir in directions) {
+            if (!GetDirectionCondition(dir)) {
+                foreach (PlayerDirection dir2 in directions) {
+                    SetDirectionBasedOn(dir2);
+                }
+            }
+        }
+        animator.SetInteger("Direction", GetDirectionInt(direction));
+    }
+
+    private bool GetDirectionCondition(PlayerDirection dir) {
+        return dir switch {
+            PlayerDirection.Down => movement.y < 0,
+            PlayerDirection.Up => movement.y > 0,
+            PlayerDirection.Left => movement.x < 0,
+            PlayerDirection.Right => movement.x > 0,
+            _ => false,
+        };
+    }
+
+    private void SetDirectionBasedOn(PlayerDirection dir) {
+        if (GetDirectionCondition(dir)) {
+            direction = dir;
+        }
+    }
+
+    private int GetDirectionInt(PlayerDirection dir) {
+        return dir switch {
+            PlayerDirection.Up => 0,
+            PlayerDirection.Right => 1,
+            PlayerDirection.Down => 2,
+            PlayerDirection.Left => 3,
+            _ => 2,
+        };
+    }
+
+    public PlayerDirection GetPlayerDirection() {
+        return direction;
     }
 
     private void FixedUpdate() {

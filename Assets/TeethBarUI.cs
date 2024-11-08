@@ -29,7 +29,7 @@ public class TeethBarUI : MonoBehaviour {
             if (i < currentTeeth) {
                 toothImages[i].color = Color.white; // Normal color for filled tooth
             } else {
-                toothImages[i].color = Color.black; // Darken the tooth if it's missing
+                toothImages[i].color = new Color(0.5157232f, 0.1856927f, 0.1856927f); // Darken the tooth if it's missing
             }
         }
     }
