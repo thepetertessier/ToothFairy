@@ -22,6 +22,7 @@ public class ToothstalkerAI : MonoBehaviour
     [SerializeField] private float attackDuration = 3f; // time in seconds to attack
 
     [SerializeField] private float alertRadius = 1f; // detection radius for player
+    [SerializeField] private GameObject eyes;
     private readonly float offsetY = 0.37f;
 
     private ToothstalkerState currentState;
@@ -101,6 +102,10 @@ public class ToothstalkerAI : MonoBehaviour
         // if (currentState == newState) {
         //     return; // without reseting anything
         // }
+
+        if (newState != ToothstalkerState.Alert) {
+            eyes.SetActive(false);
+        }
 
         currentState = newState;
         switch (newState) {
@@ -225,6 +230,7 @@ public class ToothstalkerAI : MonoBehaviour
 
 
     private void Alert() {
+        eyes.SetActive(true);
         MoveTowards(currentTarget, baseSpeed*2.5f);
         PauseIfReachesCurrentTarget();
     }
