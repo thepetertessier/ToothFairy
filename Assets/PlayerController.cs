@@ -20,12 +20,20 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 movement;
     private Rigidbody2D rb;
     private Animator animator;
-    private PlayerDirection direction = PlayerDirection.Down;
+    public PlayerDirection direction = PlayerDirection.Down;
+    private Transform flashlight;
 
     private void Awake() {
         playerControls = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        flashlight = transform.GetChild(0).GetComponent<Transform>();
+    }
+
+    private void Start() {
+        UpdateDirection();
+        UpdateFlashlightDirection();
+        animator.SetInteger("Direction", GetDirectionInt(direction));
     }
 
     private void OnEnable() {
@@ -35,19 +43,17 @@ public class PlayerMovement : MonoBehaviour
     private void Update() {
         PlayerInput();
         UpdateDirection();
-        // animator.SetFloat("dy", movement.y);
-        // animator.SetFloat("dx", movement.x);
     }
 
     private void UpdateDirection() {
+        if (GetDirectionCondition(direction) || movement == Vector2.zero)
+            // as long as the player keeps holding down direction or presses nothing, nothing updates
+            return;
         Array directions = Enum.GetValues(typeof(PlayerDirection));
         foreach (PlayerDirection dir in directions) {
-            if (!GetDirectionCondition(dir)) {
-                foreach (PlayerDirection dir2 in directions) {
-                    SetDirectionBasedOn(dir2);
-                }
-            }
+            SetDirectionBasedOn(dir);
         }
+        UpdateFlashlightDirection();
         animator.SetInteger("Direction", GetDirectionInt(direction));
     }
 
@@ -75,6 +81,18 @@ public class PlayerMovement : MonoBehaviour
             PlayerDirection.Left => 3,
             _ => 2,
         };
+    }
+
+    private void UpdateFlashlightDirection() {
+        float z_rotation = direction switch {
+            PlayerDirection.Up => 0,
+            PlayerDirection.Right => -90,
+            PlayerDirection.Down => 180,
+            PlayerDirection.Left => 90,
+            _ => -90,
+        };
+        flashlight.rotation = Quaternion.Euler(0, 0, z_rotation);
+        Debug.Log($"Changed flashlight z to {z_rotation}");
     }
 
     public PlayerDirection GetPlayerDirection() {

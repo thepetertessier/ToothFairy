@@ -49,7 +49,7 @@ public class BedInteraction : MonoBehaviour {
     }
 
     private bool PlayerIsFacingBed() {
-        bool playerIsLeftOfBed = player.position.x > transform.position.x;
+        bool playerIsLeftOfBed = player.position.x < transform.position.x;
         bool playerIsFacingRight = playerMovement.GetPlayerDirection() == PlayerDirection.Right;
         bool playerIsFacingLeft = playerMovement.GetPlayerDirection() == PlayerDirection.Left;
         return (playerIsLeftOfBed && playerIsFacingRight) || (!playerIsLeftOfBed && playerIsFacingLeft);
