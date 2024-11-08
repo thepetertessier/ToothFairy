@@ -16,6 +16,8 @@ public class BedInteraction : MonoBehaviour {
     private PlayerControls playerControls;
     private Transform player;
     private PlayerMovement playerMovement;
+    private GoodiePlacer goodiePlacer;
+    private string bedName;
     SpriteRenderer bedSpriteRenderer;
 
 
@@ -24,8 +26,10 @@ public class BedInteraction : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         loadingBarImage = GameObject.FindGameObjectWithTag("Loading").GetComponent<Image>();
+        goodiePlacer = GameObject.FindGameObjectWithTag("Logic").GetComponent<GoodiePlacer>();
         Transform parentTransform = transform.parent;
         bedSpriteRenderer = parentTransform.GetComponent<SpriteRenderer>();
+        bedName = parentTransform.name;
     }
 
     private void Start() {
@@ -87,8 +91,12 @@ public class BedInteraction : MonoBehaviour {
         // darken to show it's been searched
         bedSpriteRenderer.color = new Color(0.688f, 0.523f, 0.523f, 1f);
 
-        Debug.Log("Searched!");
-        Debug.Log($"Color:{bedSpriteRenderer.color}");
+        if (goodiePlacer.HasKey(bedName)) {
+            Debug.Log("Found key!");
+        }
+        if (goodiePlacer.HasTooth(bedName)) {
+            Debug.Log("Found tooth!");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
