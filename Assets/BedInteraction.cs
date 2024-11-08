@@ -17,6 +17,7 @@ public class BedInteraction : MonoBehaviour {
     private Transform player;
     private PlayerMovement playerMovement;
     private GoodiePlacer goodiePlacer;
+    private ToothTracker toothTracker;
     private string bedName;
     SpriteRenderer bedSpriteRenderer;
 
@@ -26,7 +27,9 @@ public class BedInteraction : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         loadingBarImage = GameObject.FindGameObjectWithTag("Loading").GetComponent<Image>();
-        goodiePlacer = GameObject.FindGameObjectWithTag("Logic").GetComponent<GoodiePlacer>();
+        GameObject logic = GameObject.FindGameObjectWithTag("Logic");
+        goodiePlacer = logic.GetComponent<GoodiePlacer>();
+        toothTracker = logic.GetComponent<ToothTracker>();
         Transform parentTransform = transform.parent;
         bedSpriteRenderer = parentTransform.GetComponent<SpriteRenderer>();
         bedName = parentTransform.name;
@@ -96,6 +99,7 @@ public class BedInteraction : MonoBehaviour {
         }
         if (goodiePlacer.HasTooth(bedName)) {
             Debug.Log("Found tooth!");
+            toothTracker.CollectTooth();
         }
     }
 

@@ -7,6 +7,7 @@ TagManager:
   - Loading
   - Bed
   - Logic
+  - TeethBar
   layers:
   - Default
   - TransparentFX
