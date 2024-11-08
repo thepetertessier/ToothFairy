@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6177035426763883608}
   - component: {fileID: 8202401527631265425}
+  - component: {fileID: 2256923449200876818}
   m_Layer: 0
   m_Name: Flourescent
   m_TagString: Untagged
@@ -82,3 +83,21 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &2256923449200876818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6754452080202637303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5025f4377e27b534caa851485e82727d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fluorescentLight: {fileID: 0}
+  minIntensity: 0.5
+  maxIntensity: 1.5
+  flickerSpeed: 0.3
+  chanceToBlackout: 0.005
+  blackoutDuration: 5
