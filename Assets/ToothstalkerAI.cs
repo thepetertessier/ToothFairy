@@ -36,11 +36,13 @@ public class ToothstalkerAI : MonoBehaviour
 
     private Transform player;  // Reference to the player
     private Animator animator;
+    private SpriteRenderer spriteRenderer;
     
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         patrolPoints = new Dictionary<string, Transform>();
         Transform patrolPointsParent = GameObject.Find("PatrolPoints").transform;
@@ -229,6 +231,9 @@ public class ToothstalkerAI : MonoBehaviour
 
 private void Blinded()
 {
+    // become slightly transparent
+    spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.2f);
+
     // Calculate the retreat direction away from the player
     Vector3 retreatDirection = (transform.position - player.position).normalized;
 
@@ -244,7 +249,7 @@ private void Blinded()
     Vector3 chosenDirection = (rightDestination.magnitude < leftDestination.magnitude) ? retreatRight : retreatLeft;
 
     // Move in the chosen retreat direction
-    MoveTowards(transform.position + chosenDirection * 1f, baseSpeed * 6);
+    MoveTowards(transform.position + chosenDirection * 1.5f, baseSpeed * 4);
 
     // Schedule return to patrol after retreating
     Invoke(nameof(ReturnToPatrol), 0.5f);
@@ -252,6 +257,7 @@ private void Blinded()
 
     private void ReturnToPatrol()
     {
+        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
         SetState(ToothstalkerState.Patrolling);
     }
 
