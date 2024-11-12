@@ -17,8 +17,6 @@ public class DoorInteraction : ObjectInteraction
 
     protected override void CompleteInteraction() {
         base.CompleteInteraction();
-
-        if (keyTracker.PlayerHasKey())
         {
             Debug.Log("Door unlocked!");
             doorRenderer.sprite = unlockedSprite;
@@ -30,12 +28,18 @@ public class DoorInteraction : ObjectInteraction
     }
 
     protected override bool PlayerIsFacingObject(Transform player, Transform transform, PlayerDirection playerDirection) {
-        bool playerIsBelowDoor = player.position.y > transform.position.y;
-        bool playerIsFacingUp = playerDirection == PlayerDirection.Up;
-        return playerIsBelowDoor && playerIsFacingUp;
+        return playerDirection == PlayerDirection.Up;
     }
 
     protected override float GetInteractionTime() {
         return unlockDuration;
+    }
+
+    // protected override Vector3 GetLoadingBarOffset() {
+    //     return base.GetLoadingBarOffset() + new Vector3(0,0);
+    // }
+
+    protected override bool PlayerCanInteract() {
+        return base.PlayerCanInteract() && keyTracker.PlayerHasKey();
     }
 }

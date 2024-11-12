@@ -25,7 +25,7 @@ public abstract class ObjectInteraction : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (isPlayerNearby && PlayerIsActing() && PlayerIsFacingObject(player, transform, playerMovement.GetPlayerDirection()))
+        if (PlayerCanInteract())
         {
             FixLoadingBarPosition();
 
@@ -55,6 +55,10 @@ public abstract class ObjectInteraction : MonoBehaviour
         }
     }
 
+    protected virtual bool PlayerCanInteract() {
+        return isPlayerNearby && PlayerIsActing() && PlayerIsFacingObject(player, transform, playerMovement.GetPlayerDirection());
+    }
+
     private bool PlayerIsActing()
     {
         return playerMovement.IsActing();
@@ -75,10 +79,13 @@ public abstract class ObjectInteraction : MonoBehaviour
         playerMovement.TurnOnLight();
     }
 
-    protected void FixLoadingBarPosition()
-    {
-        progressBarController.SetPositionInWorld(transform.position);
+    protected void FixLoadingBarPosition() {
+        Vector3 position = transform.position + GetLoadingBarOffset();
+        progressBarController.SetPositionInWorld(position);
+        Debug.Log($"Set position: {position}");
     }
+
+    protected virtual Vector3 GetLoadingBarOffset() { return default; }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -86,6 +93,7 @@ public abstract class ObjectInteraction : MonoBehaviour
         {
             isPlayerNearby = true;
             ActivateLoadingBar();
+            Debug.Log("Detected player!");
         }
     }
 
