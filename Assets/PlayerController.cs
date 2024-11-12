@@ -21,11 +21,12 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 movement;
     private Rigidbody2D rb;
     private Animator animator;
-    public PlayerDirection direction = PlayerDirection.Up;
+    public PlayerDirection direction;
     private Transform flashlight;
     private bool canMove = true;
 
     private void Awake() {
+        direction = PlayerDirection.Up;
         playerControls = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
