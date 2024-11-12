@@ -2,50 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BedInteraction : MonoBehaviour {
     [SerializeField] private float minInteractionTime = 3f;
     [SerializeField] private float maxInteractionTime = 5f;
-    [SerializeField] private Image loadingBarImage;
     private float interactionTime;
     private bool isPlayerNearby = false;
     private float holdTime = 0f;
     private bool isInteracting = false;
     private bool isSearched = false;
-    private PlayerControls playerControls;
     private Transform player;
     private PlayerMovement playerMovement;
     private GoodiePlacer goodiePlacer;
     private ToothTracker toothTracker;
+    private KeyTracker keyTracker;
     private string bedName;
     SpriteRenderer bedSpriteRenderer;
+    private ProgressBarController progressBarController;
 
 
     private void Awake() {
-        playerControls = new PlayerControls();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-        loadingBarImage = GameObject.FindGameObjectWithTag("Loading").GetComponent<Image>();
+        progressBarController = GameObject.FindGameObjectWithTag("Loading").GetComponent<ProgressBarController>();
         GameObject logic = GameObject.FindGameObjectWithTag("Logic");
         goodiePlacer = logic.GetComponent<GoodiePlacer>();
         toothTracker = logic.GetComponent<ToothTracker>();
+        keyTracker = logic.GetComponent<KeyTracker>();
         Transform parentTransform = transform.parent;
         bedSpriteRenderer = parentTransform.GetComponent<SpriteRenderer>();
         bedName = parentTransform.name;
     }
 
-    private void Start() {
-        loadingBarImage.gameObject.SetActive(false);
-        loadingBarImage.fillAmount = 0f;
-    }
-
-    private void OnEnable() {
-        playerControls.Enable();
-    }
-
     private bool PlayerIsActing() {
-        return playerControls.Interaction.Act.ReadValue<float>() > 0;
+        return playerMovement.IsActing();
     }
 
     private bool PlayerIsFacingBed() {
@@ -73,7 +63,7 @@ public class BedInteraction : MonoBehaviour {
 
             // Update the hold time and fill the loading bar
             holdTime += Time.deltaTime;
-            loadingBarImage.fillAmount = getConcaveDownProgress(holdTime / interactionTime);
+            progressBarController.SetProgress(getConcaveDownProgress(holdTime / interactionTime));
 
             // Check if fully filled
             if (holdTime >= interactionTime) {
@@ -84,14 +74,14 @@ public class BedInteraction : MonoBehaviour {
         {
             isInteracting = false;
             holdTime = 0f;
-            loadingBarImage.fillAmount = 0f;
+            progressBarController.SetProgress(0f);
             playerMovement.TurnOnLight();
         }
     }
 
     private void CompleteInteraction() {
         isSearched = true;
-        loadingBarImage.gameObject.SetActive(false);
+        progressBarController.TurnOff();
         playerMovement.TurnOnLight();
 
         // darken to show it's been searched
@@ -99,6 +89,7 @@ public class BedInteraction : MonoBehaviour {
 
         if (goodiePlacer.HasKey(bedName)) {
             Debug.Log("Found key!");
+            keyTracker.CollectKey();
         }
         if (goodiePlacer.HasTooth(bedName)) {
             Debug.Log("Found tooth!");
@@ -114,14 +105,13 @@ public class BedInteraction : MonoBehaviour {
     }
 
     private void ActivateLoadingBar() {
-        loadingBarImage.gameObject.SetActive(true);
+        progressBarController.TurnOn();
         FixLoadingBarPosition();
         interactionTime = Random.Range(minInteractionTime, maxInteractionTime);
     }
 
     private void FixLoadingBarPosition() {
-        UnityEngine.Vector3 bedScreenPosition = Camera.main.WorldToScreenPoint(transform.position);
-        loadingBarImage.transform.position = bedScreenPosition;
+        progressBarController.SetPositionInWorld(transform.position);
     }
 
     private void OnTriggerExit2D(Collider2D other) {
@@ -129,8 +119,7 @@ public class BedInteraction : MonoBehaviour {
             isPlayerNearby = false;
             isInteracting = false;
             holdTime = 0f;
-            loadingBarImage.fillAmount = 0f;
-            loadingBarImage.gameObject.SetActive(false);
+            progressBarController.TurnOff();
         }
     }
 }

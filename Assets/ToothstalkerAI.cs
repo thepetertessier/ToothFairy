@@ -4,23 +4,20 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum ToothstalkerState
-{
+public enum ToothstalkerState {
     Patrolling,
     Pausing,
     Alert,
     Prowling,
     Blinded,
     Attacking,
-    Occupied
+    Occupied,
+    None
 }
 
-public class ToothstalkerAI : MonoBehaviour
-{
+public class ToothstalkerAI : MonoBehaviour {
     [SerializeField] private float baseSpeed = 1f;
     [SerializeField] private float pauseDuration = 2f; // time in seconds to pause
-    [SerializeField] private float attackDuration = 3f; // time in seconds to attack
-
     [SerializeField] private float alertRadius = 1f; // detection radius for player
     [SerializeField] private GameObject eyes;
     private readonly float offsetY = 0.37f;
@@ -28,22 +25,24 @@ public class ToothstalkerAI : MonoBehaviour
     private ToothstalkerState currentState;
     private Action currentBehavior;
     private float pauseTimer;
-    private float attackTimer;
-    private Vector3 currentTarget;  // Target location for patrolling
+    private Vector3 currentTarget;
 
     private Dictionary<string, Transform> patrolPoints;
     private string currentPatrolPoint;
 
 
     private Transform player;  // Reference to the player
-    private Animator animator;
     private SpriteRenderer spriteRenderer;
+    private ToothstalkerAttack toothstalkerAttack;
+    private ToothstalkerAnimation toothstalkerAnimation;
+
     
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        toothstalkerAttack = GetComponent<ToothstalkerAttack>();
+        toothstalkerAnimation = GetComponent<ToothstalkerAnimation>();
 
         patrolPoints = new Dictionary<string, Transform>();
         Transform patrolPointsParent = GameObject.Find("PatrolPoints").transform;
@@ -54,54 +53,18 @@ public class ToothstalkerAI : MonoBehaviour
 
         currentPatrolPoint = "11";
         currentTarget = patrolPoints[currentPatrolPoint].position;
+    }
 
+    private void Start(){
         SetState(ToothstalkerState.Patrolling);
     }
 
-    private void Update()
-    {
-        currentBehavior?.Invoke();        
-        animator.SetInteger("State", GetAnimatorStateValue(currentState));
-    }
-
-    // private Action GetStateAction(ToothstalkerState state) {
-    //     return state switch
-    //     {
-    //         ToothstalkerState.Patrolling => Patrol,
-    //         ToothstalkerState.Pausing => Pause,
-    //         ToothstalkerState.Alert => Alert,
-    //         ToothstalkerState.Prowling => Prowl,
-    //         ToothstalkerState.Blinded => Blinded,
-    //         ToothstalkerState.Attacking => Attack,
-    //         ToothstalkerState.Occupied => Occupied,
-    //         _ => Patrol,
-    //     };
-    // }
-
-    /*
-     * 0 standing
-     * 1 walking
-     * 2 attacking
-     * 3 dying (blinded)
-     */
-    private int GetAnimatorStateValue(ToothstalkerState state) {
-        return state switch
-        {
-            ToothstalkerState.Patrolling => 1,
-            ToothstalkerState.Pausing => 0,
-            ToothstalkerState.Alert => 1,
-            ToothstalkerState.Prowling => 1,
-            ToothstalkerState.Blinded => 3,
-            ToothstalkerState.Attacking => 2,
-            ToothstalkerState.Occupied => 2,
-            _ => 0,
-        };
+    private void Update() {
+        currentBehavior?.Invoke();
     }
 
     private void SetState(ToothstalkerState newState) {
-        // if (currentState == newState) {
-        //     return; // without reseting anything
-        // }
+        toothstalkerAnimation.TriggerAnimation(newState);
 
         if (newState != ToothstalkerState.Alert) {
             eyes.SetActive(false);
@@ -134,7 +97,7 @@ public class ToothstalkerAI : MonoBehaviour
 
             case ToothstalkerState.Attacking:
                 currentBehavior = Attack;
-                attackTimer = attackDuration;
+                toothstalkerAttack.AttachToPlayer();
                 break;
             
             case ToothstalkerState.Occupied:
@@ -146,8 +109,7 @@ public class ToothstalkerAI : MonoBehaviour
                 currentBehavior = Blinded;
                 break;
         }
-
-        // Debug.Log($"Set state: {currentState}");
+        Debug.Log($"Set state: {newState}");
     }
         
     private void Patrol() {
@@ -239,7 +201,6 @@ public class ToothstalkerAI : MonoBehaviour
 
 
     private void Alert() {
-        eyes.SetActive(true);
         MoveTowards(currentTarget, baseSpeed*2.5f);
         PauseIfReachesCurrentTarget();
     }
@@ -284,20 +245,9 @@ public class ToothstalkerAI : MonoBehaviour
     }
 
     private void Attack() {
-        // Logic for damaging the player and waiting for the attack animation or time limit to end
-        // For example, reduce health over time, or trigger a “break free” mechanic
-        // attackTimer -= Time.deltaTime;
-
-        // if (attackTimer <= 0) {
-        //     EndAttack();
-        // }
-
-        Invoke(nameof(EndAttack), 0.1f);
-    }
-
-    private void EndAttack()
-    {
-        SetState(ToothstalkerState.Occupied);
+        if (toothstalkerAttack.JustFinished()) {
+            SetState(ToothstalkerState.Occupied);
+        }
     }
 
     private void Prowl() {

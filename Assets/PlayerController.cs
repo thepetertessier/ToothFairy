@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     public PlayerDirection direction = PlayerDirection.Down;
     private Transform flashlight;
+    private bool canMove = true;
 
     private void Awake() {
         playerControls = new PlayerControls();
@@ -44,6 +45,10 @@ public class PlayerMovement : MonoBehaviour
     private void Update() {
         PlayerInput();
         UpdateDirection();
+    }
+
+    public void SetCanMove(bool canMove) {
+        this.canMove = canMove;
     }
 
     private void UpdateDirection() {
@@ -93,15 +98,20 @@ public class PlayerMovement : MonoBehaviour
             _ => -90,
         };
         flashlight.rotation = Quaternion.Euler(0, 0, z_rotation);
-        Debug.Log($"Changed flashlight z to {z_rotation}");
     }
 
     public PlayerDirection GetPlayerDirection() {
         return direction;
     }
 
+    public bool IsActing() {
+        return playerControls.Interaction.Act.ReadValue<float>() > 0;
+    }
+
     private void FixedUpdate() {
-        Move();
+        if (canMove) {
+            Move();
+        }
     }
 
     private void PlayerInput() {
