@@ -11,29 +11,30 @@ public abstract class ObjectInteraction : MonoBehaviour
     private Transform player;
     private PlayerMovement playerMovement;
     private ProgressBarController progressBarController;
+    private CameraFollow cameraFollow;
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerMovement = player.GetComponent<PlayerMovement>();
         progressBarController = GameObject.FindGameObjectWithTag("Loading").GetComponent<ProgressBarController>();
+        cameraFollow = Camera.main.GetComponent<CameraFollow>();
         CustomAwake();
     }
 
     // This method can be overridden by child classes if they need additional setup.
     protected virtual void CustomAwake() { }
 
-    protected virtual void Update()
-    {
-        if (PlayerCanInteract())
-        {
+    protected virtual void Update() {
+        if (PlayerCanInteract()) {
             FixLoadingBarPosition();
 
-            if (!isInteracting)
-            {
+            if (!isInteracting) {
                 isInteracting = true;
                 holdTime = 0f; // Reset hold time
                 playerMovement.TurnOffLight();
+                ActivateLoadingBar();
+                cameraFollow.ZoomInToTarget();
             }
 
             // Update the hold time and fill the loading bar
@@ -41,17 +42,12 @@ public abstract class ObjectInteraction : MonoBehaviour
             progressBarController.SetProgress(GetConcaveDownProgress(holdTime / interactionTime));
 
             // Check if fully filled
-            if (holdTime >= interactionTime)
-            {
+            if (holdTime >= interactionTime) {
                 CompleteInteraction();
             }
         }
-        else if (isInteracting) // Stop filling when button is released
-        {
-            isInteracting = false;
-            holdTime = 0f;
-            progressBarController.SetProgress(0f);
-            playerMovement.TurnOnLight();
+        else if (isInteracting) {
+            HaltInteraction();
         }
     }
 
@@ -75,8 +71,16 @@ public abstract class ObjectInteraction : MonoBehaviour
     }
 
     protected virtual void CompleteInteraction() {
+        HaltInteraction();
+    }
+
+    protected virtual void HaltInteraction() {
+        // always do this, even if interrupted
+        isInteracting = false;
+        holdTime = 0f;
         progressBarController.TurnOff();
         playerMovement.TurnOnLight();
+        cameraFollow.ResetZoom();
     }
 
     protected void FixLoadingBarPosition() {

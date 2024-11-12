@@ -224,6 +224,9 @@ MonoBehaviour:
   minBounds: {x: -0.8, y: -0.5}
   maxBounds: {x: 0.8, y: 1.4}
   smoothing: 0.2
+  normalSize: 2
+  zoomedSize: 0.7
+  zoomSpeed: 2
 --- !u!1 &849813330366482901
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,7 +1177,7 @@ MonoBehaviour:
   m_ApplyToSortingLayers: 00000000932f2034
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
-  m_LightOrder: 0
+  m_LightOrder: -1
   m_AlphaBlendOnOverlap: 0
   m_OverlapOperation: 0
   m_NormalMapDistance: 3
@@ -1852,7 +1855,7 @@ MonoBehaviour:
   m_ApplyToSortingLayers: 00000000932f2034
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
-  m_LightOrder: 0
+  m_LightOrder: -1
   m_AlphaBlendOnOverlap: 0
   m_OverlapOperation: 0
   m_NormalMapDistance: 3
@@ -1935,7 +1938,7 @@ MonoBehaviour:
   m_ApplyToSortingLayers: 00000000932f2034
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
-  m_LightOrder: 0
+  m_LightOrder: -1
   m_AlphaBlendOnOverlap: 0
   m_OverlapOperation: 1
   m_NormalMapDistance: 3
