@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 movement;
     private Rigidbody2D rb;
     private Animator animator;
-    public PlayerDirection direction = PlayerDirection.Down;
+    public PlayerDirection direction = PlayerDirection.Up;
     private Transform flashlight;
     private bool canMove = true;
 
@@ -129,5 +129,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void TurnOnLight() {
         playerLight.SetActive(true);
+    }
+
+    private void OnDestroy() {
+        // Ensure that the input actions are disabled to avoid memory leaks
+        playerControls.Movement.Disable();
+        playerControls.Dispose();
     }
 }

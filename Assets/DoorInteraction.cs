@@ -18,7 +18,6 @@ public class DoorInteraction : ObjectInteraction
     protected override void CompleteInteraction() {
         base.CompleteInteraction();
         {
-            Debug.Log("Door unlocked!");
             doorRenderer.sprite = unlockedSprite;
 
             // Add your logic to load the next room/scene here

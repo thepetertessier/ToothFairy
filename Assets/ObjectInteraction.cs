@@ -82,7 +82,6 @@ public abstract class ObjectInteraction : MonoBehaviour
     protected void FixLoadingBarPosition() {
         Vector3 position = transform.position + GetLoadingBarOffset();
         progressBarController.SetPositionInWorld(position);
-        Debug.Log($"Set position: {position}");
     }
 
     protected virtual Vector3 GetLoadingBarOffset() { return default; }
@@ -93,7 +92,6 @@ public abstract class ObjectInteraction : MonoBehaviour
         {
             isPlayerNearby = true;
             ActivateLoadingBar();
-            Debug.Log("Detected player!");
         }
     }
 

@@ -24,7 +24,7 @@ public class ToothstalkerAttack : MonoBehaviour {
     private void Awake() {
         progressBarController = GameObject.FindGameObjectWithTag("Loading").GetComponent<ProgressBarController>();
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-        toothTracker = GameObject.FindGameObjectWithTag("Logic").GetComponent<ToothTracker>();
+        toothTracker = FindAnyObjectByType<ToothTracker>();
         toothstalkerAnimation = GetComponent<ToothstalkerAnimation>();
     }
 

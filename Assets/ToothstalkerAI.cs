@@ -104,7 +104,6 @@ public class ToothstalkerAI : MonoBehaviour {
                 currentBehavior = Blinded;
                 break;
         }
-        Debug.Log($"Set state: {newState}");
     }
         
     private void Patrol() {

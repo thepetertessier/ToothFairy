@@ -7,8 +7,15 @@ public class ToothTracker : MonoBehaviour {
     [SerializeField] private int maxTeethCount = 10;
     private int teethCount;
     private TeethBarUI teethBarUI;
+    private ToothTracker instance;
 
     private void Awake() {
+        if (instance == null) {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        } else {
+            Destroy(gameObject);
+        }
         teethCount = initialTeethCount;
         teethBarUI = GameObject.FindGameObjectWithTag("TeethBar").GetComponent<TeethBarUI>();
     }

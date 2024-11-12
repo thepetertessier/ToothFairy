@@ -9,7 +9,7 @@ public class TeethBarUI : MonoBehaviour {
     [SerializeField] private Image[] toothImages; // Array to hold references to the 10 tooth images
 
     private void Awake() {
-        toothTracker = GameObject.FindGameObjectWithTag("Logic").GetComponent<ToothTracker>();
+        toothTracker = FindAnyObjectByType<ToothTracker>();
 
         toothImages = new Image[toothTracker.GetMaxTeethCount()];
         for (int i = 0; i < toothImages.Length; i++) {

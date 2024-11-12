@@ -18,7 +18,7 @@ public class BedInteraction : ObjectInteraction
     {
         GameObject logic = GameObject.FindGameObjectWithTag("Logic");
         goodiePlacer = logic.GetComponent<GoodiePlacer>();
-        toothTracker = logic.GetComponent<ToothTracker>();
+        toothTracker = FindAnyObjectByType<ToothTracker>();
         keyTracker = logic.GetComponent<KeyTracker>();
         Transform parentTransform = transform.parent;
         bedSpriteRenderer = parentTransform.GetComponent<SpriteRenderer>();
@@ -45,12 +45,10 @@ public class BedInteraction : ObjectInteraction
 
         if (goodiePlacer.HasKey(bedName))
         {
-            Debug.Log("Found key!");
             keyTracker.CollectKey();
         }
         if (goodiePlacer.HasTooth(bedName))
         {
-            Debug.Log("Found tooth!");
             toothTracker.CollectTooth();
         }
 

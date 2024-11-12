@@ -30,7 +30,6 @@ public class GoodiePlacer : MonoBehaviour {
             if (bedNames.Count == 0) break;
             string bed = PopRandom(bedNames);
             bedsWithTeeth.Add(bed);
-            Debug.Log($"Put tooth in bed: {bed}");
         }
     }
 
@@ -39,7 +38,6 @@ public class GoodiePlacer : MonoBehaviour {
         int index = Random.Range(0, strings.Count);
         string element = strings[index];
         strings.RemoveAt(index);
-        Debug.Log($"Chose index {index} from {strings} with count {strings.Count}");
         return element;
     }
 
