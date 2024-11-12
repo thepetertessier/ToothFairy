@@ -39,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void OnEnable() {
+        playerControls ??= new PlayerControls();
         playerControls.Enable();
     }
 
