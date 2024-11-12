@@ -24,6 +24,10 @@ public class ToothstalkerAnimation : MonoBehaviour
     }
 
     public void TriggerAnimation(ToothstalkerState state) {
+        animator.ResetTrigger("stand");
+        animator.ResetTrigger("walk");
+        animator.ResetTrigger("attack");
+        animator.ResetTrigger("die");
         animator.SetTrigger(GetAnimatorTriggerValue(state));
     }
 }

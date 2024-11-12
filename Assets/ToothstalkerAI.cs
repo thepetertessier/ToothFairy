@@ -63,20 +63,15 @@ public class ToothstalkerAI : MonoBehaviour {
         currentBehavior?.Invoke();
     }
 
+    private void SetOpacity(float alpha) {
+        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, alpha);
+    }
+
     private void SetState(ToothstalkerState newState) {
         toothstalkerAnimation.TriggerAnimation(newState);
 
-        if (newState != ToothstalkerState.Alert) {
-            eyes.SetActive(false);
-        } else {
-            eyes.SetActive(true);
-        }
-
-        if (newState == ToothstalkerState.Blinded) {
-            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.2f);
-        } else {
-            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
-        }
+        eyes.SetActive(newState == ToothstalkerState.Alert);
+        SetOpacity(newState == ToothstalkerState.Blinded ? 0.2f : 1f);
 
         currentState = newState;
         switch (newState) {

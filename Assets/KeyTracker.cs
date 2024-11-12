@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class KeyTracker : MonoBehaviour
 {
-    private bool hasKey = false;
+    public bool hasKey = false;
     private KeyUI keyUI;
     private void Awake() {
         keyUI = GameObject.FindGameObjectWithTag("KeyUI").GetComponent<KeyUI>();
