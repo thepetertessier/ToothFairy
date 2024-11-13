@@ -13,6 +13,8 @@ public abstract class ObjectInteraction : MonoBehaviour
     private ProgressBarController progressBarController;
     private CameraFollow cameraFollow;
     private ToothstalkerAI toothstalkerAI;
+    protected AudioManager audioManager;
+    private AudioClip clip;
 
     private void Awake()
     {
@@ -21,6 +23,8 @@ public abstract class ObjectInteraction : MonoBehaviour
         progressBarController = GameObject.FindGameObjectWithTag("Loading").GetComponent<ProgressBarController>();
         cameraFollow = Camera.main.GetComponent<CameraFollow>();
         toothstalkerAI = FindAnyObjectByType<ToothstalkerAI>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        clip = GetSFX();
         CustomAwake();
     }
 
@@ -37,6 +41,7 @@ public abstract class ObjectInteraction : MonoBehaviour
                 playerMovement.TurnOffLight();
                 ActivateLoadingBar();
                 cameraFollow.ZoomInToTarget();
+                audioManager.PlaySFX(clip);
             }
 
             // Update the hold time and fill the loading bar
@@ -83,6 +88,7 @@ public abstract class ObjectInteraction : MonoBehaviour
         progressBarController.TurnOff();
         playerMovement.TurnOnLight();
         cameraFollow.ResetZoom();
+        audioManager.StopSFX(clip);
     }
 
     protected void FixLoadingBarPosition() {
@@ -100,6 +106,8 @@ public abstract class ObjectInteraction : MonoBehaviour
             ActivateLoadingBar();
         }
     }
+
+    protected abstract AudioClip GetSFX();
 
     private void ActivateLoadingBar()
     {

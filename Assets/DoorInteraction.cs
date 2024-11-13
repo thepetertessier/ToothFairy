@@ -41,4 +41,9 @@ public class DoorInteraction : ObjectInteraction
     protected override bool PlayerCanInteract() {
         return base.PlayerCanInteract() && keyTracker.PlayerHasKey();
     }
+
+    protected override AudioClip GetSFX()
+    {
+        return audioManager.keyTurning;
+    }
 }
