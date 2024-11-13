@@ -7,8 +7,10 @@ public class KeyTracker : MonoBehaviour
 {
     public bool hasKey = false;
     private KeyUI keyUI;
+    private AudioManager audioManager;
     private void Awake() {
         keyUI = GameObject.FindGameObjectWithTag("KeyUI").GetComponent<KeyUI>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public bool PlayerHasKey() {
@@ -18,5 +20,6 @@ public class KeyTracker : MonoBehaviour
     public void CollectKey() {
         hasKey = true;
         keyUI.MakeKeyVisible();
+        audioManager.PlaySFX("key collected"); 
     }
 }

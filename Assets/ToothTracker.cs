@@ -10,6 +10,7 @@ public class ToothTracker : MonoBehaviour {
     private int teethCount;
     private TeethBarUI teethBarUI;
     private ToothTracker instance;
+    private AudioManager audioManager;
 
     private void Awake() {
         if (instance == null) {
@@ -20,6 +21,7 @@ public class ToothTracker : MonoBehaviour {
         }
         teethCount = initialTeethCount;
         teethBarUI = GameObject.FindGameObjectWithTag("TeethBar").GetComponent<TeethBarUI>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public void CollectTooth() {
@@ -27,6 +29,7 @@ public class ToothTracker : MonoBehaviour {
             teethCount++;
         } //else drop tooth?
         teethBarUI.UpdateTeethBar();
+        audioManager.PlaySFX("tooth collected");
     }
 
     public void RemoveTooth() {
