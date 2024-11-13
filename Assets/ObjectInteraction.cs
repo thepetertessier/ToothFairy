@@ -79,6 +79,8 @@ public abstract class ObjectInteraction : MonoBehaviour
 
     protected virtual void CompleteInteraction() {
         HaltInteraction();
+        // never allow to be interacted again
+        this.enabled = false;
     }
 
     protected virtual void HaltInteraction() {

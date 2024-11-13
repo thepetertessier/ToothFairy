@@ -8,22 +8,19 @@ public class DoorInteraction : ObjectInteraction
     [SerializeField] private Sprite unlockedSprite;
     private KeyTracker keyTracker;
     private SpriteRenderer doorRenderer;
+    private BoxCollider2D doorCollider;
 
     protected override void CustomAwake() {
         keyTracker = GameObject.FindGameObjectWithTag("Logic").GetComponent<KeyTracker>();
         Transform parentTransform = transform.parent;
         doorRenderer = parentTransform.GetComponent<SpriteRenderer>();
+        doorCollider = parentTransform.GetComponent<BoxCollider2D>();
     }
 
     protected override void CompleteInteraction() {
+        doorRenderer.sprite = unlockedSprite;
+        doorCollider.enabled = false;
         base.CompleteInteraction();
-        {
-            doorRenderer.sprite = unlockedSprite;
-
-            // Add your logic to load the next room/scene here
-            // For example:
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1);
-        }
     }
 
     protected override bool PlayerIsFacingObject(Transform player, Transform transform, PlayerDirection playerDirection) {

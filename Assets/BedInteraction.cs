@@ -7,7 +7,6 @@ public class BedInteraction : ObjectInteraction
     [SerializeField] protected float minInteractionTime = 3f;
     [SerializeField] protected float maxInteractionTime = 5f;
 
-    private bool isSearched = false;
     private GoodiePlacer goodiePlacer;
     private ToothTracker toothTracker;
     private KeyTracker keyTracker;
@@ -25,11 +24,6 @@ public class BedInteraction : ObjectInteraction
         bedName = parentTransform.name;
     }
 
-    protected override void Update() {
-        if (isSearched) return;
-        base.Update();
-    }
-
     protected override bool PlayerIsFacingObject(Transform player, Transform transform, PlayerDirection playerDirection) {
         bool playerIsLeftOfBed = player.position.x < transform.position.x;
         bool playerIsFacingRight = playerDirection == PlayerDirection.Right;
@@ -39,20 +33,11 @@ public class BedInteraction : ObjectInteraction
 
     protected override void CompleteInteraction()
     {
-        base.CompleteInteraction();
-        isSearched = true;
         bedSpriteRenderer.color = new Color(0.688f, 0.523f, 0.523f, 1f);
 
-        if (goodiePlacer.HasKey(bedName))
-        {
-            keyTracker.CollectKey();
-        }
-        if (goodiePlacer.HasTooth(bedName))
-        {
-            toothTracker.CollectTooth();
-        }
-
-        this.enabled = false;
+        if (goodiePlacer.HasKey(bedName)) keyTracker.CollectKey();
+        if (goodiePlacer.HasTooth(bedName)) toothTracker.CollectTooth();
+        base.CompleteInteraction();
     }
 
     protected override float GetInteractionTime() {
