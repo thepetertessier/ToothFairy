@@ -59,7 +59,7 @@ public class BedInteraction : ObjectInteraction
         return Random.Range(minInteractionTime, maxInteractionTime);
     }
 
-    protected override AudioClip GetSFX() {
+    protected override string GetSFX() {
         return audioManager.GetRandomRufflingSound();
     }
 }

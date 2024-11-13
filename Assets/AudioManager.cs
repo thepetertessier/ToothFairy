@@ -7,37 +7,41 @@ using UnityEngine;
 //     private AudioSource source;
 // }
 
+using System;
+
+[Serializable]
+public class AudioData
+{
+    public string name; // A friendly name for reference
+    public AudioClip clip; // The actual audio clip
+    public AudioSource source; // The associated audio source
+    [Range(0f, 1f)] public float volumeScale = 1f; // Volume scale (default to 1)
+}
+
+
 public class AudioManager : MonoBehaviour {
     [SerializeField] private AudioSource musicSource;
-    [SerializeField] private AudioSource objectInteractionSource;
-    [SerializeField] private AudioSource toothstalkerSource;
-    [SerializeField] private AudioSource playerBreathingSource;
-    [SerializeField] private AudioSource playerMovingSource;
-    public Dictionary<AudioClip, AudioSource> clipToSource = new();
 
+    [SerializeField] private List<AudioData> audioDataList; // List to hold all audio data
+
+    private Dictionary<string, AudioData> dataFromName = new();
     public AudioClip background;
-    public AudioClip ruffling1;
-    public AudioClip ruffling2;
-    public AudioClip ruffling3;
-    public AudioClip ruffling4;
-    public AudioClip keyTurning;
-    public AudioClip toothstalkerAttack;
-    public AudioClip walking;
-    public AudioClip death;
-    public AudioClip breathing1;
-    public AudioClip breathing2;
+
+    private AudioData GetDataFromName(string name) {
+        if (dataFromName.TryGetValue(name, out AudioData data)) {
+                return data;
+        } else {
+            Debug.LogError($"Name of audio data '{name}' not found.");
+            return default;
+        }
+    }
 
     private void Awake() {
-        clipToSource[ruffling1] = objectInteractionSource;
-        clipToSource[ruffling2] = objectInteractionSource;
-        clipToSource[ruffling3] = objectInteractionSource;
-        clipToSource[ruffling4] = objectInteractionSource;
-        clipToSource[keyTurning] = objectInteractionSource;
-        clipToSource[toothstalkerAttack] = toothstalkerSource;
-        clipToSource[walking] = playerMovingSource;
-        clipToSource[death] = playerBreathingSource;
-        clipToSource[breathing1] = playerBreathingSource;
-        clipToSource[breathing2] = playerBreathingSource;
+        foreach (var audioData in audioDataList) {
+            if (audioData.name != null) {
+                dataFromName[audioData.name] = audioData;
+            }
+        }
     }
 
     private void Start() {
@@ -45,20 +49,35 @@ public class AudioManager : MonoBehaviour {
         musicSource.Play();
     }
 
-    public void PlaySFX(AudioClip clip, float volumeScale = 1f) {
-        AudioSource source = clipToSource[clip];
-        source.PlayOneShot(clip, volumeScale);
+    public void PlaySFX(string name, float volumeScale = 1f) {
+        AudioData data = GetDataFromName(name);
+        data.source.PlayOneShot(data.clip, volumeScale * data.volumeScale);
     }
 
-    public void StopSFX(AudioClip clip) {
-        AudioSource source = clipToSource[clip];
-        if (source.isPlaying) {
-            source.Stop();
+    public void StopSFX(string name, float fadeOutDuration = 1f) {
+        AudioData data = GetDataFromName(name);
+        if (data.source.isPlaying) {
+            if (fadeOutDuration > 0f) {
+                StartCoroutine(FadeOutAndStop(data.source, fadeOutDuration));
+            } else {
+                data.source.Stop();
+            }
         }
     }
 
-    public AudioClip GetRandomRufflingSound() {
-        AudioClip[] rufflingSounds = { ruffling1, ruffling2, ruffling3, ruffling4 };
-        return rufflingSounds[Random.Range(0, rufflingSounds.Length)];
+    private IEnumerator FadeOutAndStop(AudioSource source, float duration) {
+        float startVolume = source.volume;
+        while (source.volume > 0) {
+            source.volume -= startVolume * Time.deltaTime / duration;
+            yield return null;
+        }
+
+        source.Stop();
+        source.volume = startVolume; // Reset the volume for the next play
+    }
+
+    public string GetRandomRufflingSound() {
+        string[] rufflingSounds = { "ruffling1", "ruffling2", "ruffling3", "ruffling4" };
+        return rufflingSounds[UnityEngine.Random.Range(0, rufflingSounds.Length)];
     }
 }

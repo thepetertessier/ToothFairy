@@ -3763,6 +3763,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1157458454}
+    - target: {fileID: 5524701044003758940, guid: 55c22e64ed86553408182bf6125a4eb2, type: 3}
+      propertyPath: audioDataList.Array.data[5].source
+      value: 
+      objectReference: {fileID: 1117353212641714598}
+    - target: {fileID: 5524701044003758940, guid: 55c22e64ed86553408182bf6125a4eb2, type: 3}
+      propertyPath: audioDataList.Array.data[6].source
+      value: 
+      objectReference: {fileID: 1117353212641714598}
     - target: {fileID: 5712974762109520008, guid: 55c22e64ed86553408182bf6125a4eb2, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -3875,6 +3883,11 @@ PrefabInstance:
 --- !u!1 &1117353212641714597 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8585070539045969872, guid: 55c22e64ed86553408182bf6125a4eb2, type: 3}
+  m_PrefabInstance: {fileID: 1117353212641714596}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1117353212641714598 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2491208374388458606, guid: 55c22e64ed86553408182bf6125a4eb2, type: 3}
   m_PrefabInstance: {fileID: 1117353212641714596}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807

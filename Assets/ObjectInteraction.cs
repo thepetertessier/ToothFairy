@@ -14,7 +14,7 @@ public abstract class ObjectInteraction : MonoBehaviour
     private CameraFollow cameraFollow;
     private ToothstalkerAI toothstalkerAI;
     protected AudioManager audioManager;
-    private AudioClip clip;
+    private string clip;
 
     private void Awake()
     {
@@ -107,7 +107,7 @@ public abstract class ObjectInteraction : MonoBehaviour
         }
     }
 
-    protected abstract AudioClip GetSFX();
+    protected abstract string GetSFX();
 
     private void ActivateLoadingBar()
     {
