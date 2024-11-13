@@ -12,6 +12,7 @@ public abstract class ObjectInteraction : MonoBehaviour
     private PlayerMovement playerMovement;
     private ProgressBarController progressBarController;
     private CameraFollow cameraFollow;
+    private ToothstalkerAI toothstalkerAI;
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public abstract class ObjectInteraction : MonoBehaviour
         playerMovement = player.GetComponent<PlayerMovement>();
         progressBarController = GameObject.FindGameObjectWithTag("Loading").GetComponent<ProgressBarController>();
         cameraFollow = Camera.main.GetComponent<CameraFollow>();
+        toothstalkerAI = FindAnyObjectByType<ToothstalkerAI>();
         CustomAwake();
     }
 
@@ -52,7 +54,7 @@ public abstract class ObjectInteraction : MonoBehaviour
     }
 
     protected virtual bool PlayerCanInteract() {
-        return isPlayerNearby && PlayerIsActing() && PlayerIsFacingObject(player, transform, playerMovement.GetPlayerDirection());
+        return isPlayerNearby && PlayerIsActing() && PlayerIsFacingObject(player, transform, playerMovement.GetPlayerDirection()) && !toothstalkerAI.IsAttacking();
     }
 
     private bool PlayerIsActing()

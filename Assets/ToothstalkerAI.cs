@@ -105,6 +105,10 @@ public class ToothstalkerAI : MonoBehaviour {
                 break;
         }
     }
+
+    public bool IsAttacking() {
+        return currentState == ToothstalkerState.Attacking;
+    }
         
     private void Patrol() {
         // Move towards the patrol target
