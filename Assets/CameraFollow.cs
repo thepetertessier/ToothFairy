@@ -5,47 +5,47 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField] private Transform player; // Reference to the player’s transform
-    [SerializeField] private Vector2 minBounds; // Bottom-left boundary
-    [SerializeField] private Vector2 maxBounds; // Top-right boundary
+    [SerializeField] private Vector2 bottomLeftCorner; // Bottom-left corner of the map
+    [SerializeField] private Vector2 topRightCorner; // Top-right corner of the map
     [SerializeField] private float smoothing = 0.3f; // How smoothly the camera follows the player
 
     [Header("Zoom Settings")]
     [SerializeField] private float normalSize = 5f; // Default orthographic size of the camera
     [SerializeField] private float zoomedSize = 3f;  // Smaller orthographic size for zoomed-in effect
-    [SerializeField] private float zoomSpeed = 2f; // Speed of zooming
+    [SerializeField] private float zoomDuration = 0.6f; // Speed of zooming
 
     private Vector3 velocity = Vector3.zero; // For smooth damping
-    private bool isZoomingIn = false;
-    private bool isZoomingOut = false;
+    private float zoomLerpTime = 0f; // Keeps track of the zooming progress
+    private bool isZooming = false;
+    private float fromSize;
+    private float toSize;
 
     private Camera cam; // Reference to the camera component
 
     private void Awake()
     {
-        // Get the camera component on the GameObject
         cam = GetComponent<Camera>();
+        GameObject bounds = GameObject.FindGameObjectWithTag("Bounds");
+        Transform lowerLeft = bounds.transform.GetChild(0);
+        Transform upperRight = bounds.transform.GetChild(1);
+        bottomLeftCorner = lowerLeft.position;
+        topRightCorner = upperRight.position;
     }
 
     private void LateUpdate()
     {
         if (player != null)
         {
-            // Target position based on player's position (excluding z)
-            Vector3 targetPosition = new Vector3(player.position.x, player.position.y, transform.position.z);
-
-            // Smoothly move the camera towards the target position
+            // Step 1: Center the camera on the player with smoothing
+            Vector3 targetPosition = new(player.position.x, player.position.y, transform.position.z);
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothing);
 
-            // Clamp camera position to stay within bounds
-            transform.position = new Vector3(
-                Mathf.Clamp(transform.position.x, minBounds.x, maxBounds.x),
-                Mathf.Clamp(transform.position.y, minBounds.y, maxBounds.y),
-                transform.position.z
-            );
-        }
+            // Step 2: Handle camera zoom
+            HandleZoom();
 
-        // Handle continuous zooming in or out
-        HandleZoom();
+            // Step 3: Ensure camera stays within the map bounds
+            ClampCameraWithinBounds();
+        }
     }
 
     /// <summary>
@@ -53,8 +53,7 @@ public class CameraFollow : MonoBehaviour
     /// </summary>
     public void ZoomInToTarget()
     {
-        isZoomingIn = true;
-        isZoomingOut = false;
+        ZoomTo(zoomedSize);
     }
 
     /// <summary>
@@ -62,34 +61,46 @@ public class CameraFollow : MonoBehaviour
     /// </summary>
     public void ResetZoom()
     {
-        isZoomingIn = false;
-        isZoomingOut = true;
+        ZoomTo(normalSize);
+    }
+
+    private void ZoomTo(float size) {
+        isZooming = true;
+        zoomLerpTime = 0f;
+        fromSize = cam.orthographicSize;
+        toSize = size;
     }
 
     /// <summary>
     /// Continuously handles the zoom in/out effect by adjusting the orthographic size.
     /// </summary>
-    private void HandleZoom()
+    private void HandleZoom() {
+        if (isZooming) {
+            zoomLerpTime += Time.deltaTime / zoomDuration;
+            float smoothStep = Mathf.SmoothStep(fromSize, toSize, zoomLerpTime);
+            cam.orthographicSize = smoothStep;
+
+            // Check if the zoom has reached the target size
+            if (Mathf.Approximately(cam.orthographicSize, toSize) || zoomLerpTime >= 1f) {
+                cam.orthographicSize = toSize;
+                isZooming = false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Ensures the camera stays within the map bounds after moving and zooming.
+    /// </summary>
+    private void ClampCameraWithinBounds()
     {
-        if (isZoomingIn)
-        {
-            cam.orthographicSize = Mathf.MoveTowards(cam.orthographicSize, zoomedSize, zoomSpeed * Time.deltaTime);
+        // Calculate half extents based on the orthographic size and aspect ratio
+        float halfHeight = cam.orthographicSize;
+        float halfWidth = cam.orthographicSize * cam.aspect;
 
-            // Stop zooming in when we reach the zoomed target
-            if (Mathf.Approximately(cam.orthographicSize, zoomedSize))
-            {
-                isZoomingIn = false;
-            }
-        }
-        else if (isZoomingOut)
-        {
-            cam.orthographicSize = Mathf.MoveTowards(cam.orthographicSize, normalSize, zoomSpeed * Time.deltaTime);
+        // Clamp the camera's position to ensure its edges stay within the map bounds
+        float clampedX = Mathf.Clamp(transform.position.x, bottomLeftCorner.x + halfWidth, topRightCorner.x - halfWidth);
+        float clampedY = Mathf.Clamp(transform.position.y, bottomLeftCorner.y + halfHeight, topRightCorner.y - halfHeight);
 
-            // Stop zooming out when we reach the default size
-            if (Mathf.Approximately(cam.orthographicSize, normalSize))
-            {
-                isZoomingOut = false;
-            }
-        }
+        transform.position = new Vector3(clampedX, clampedY, transform.position.z);
     }
 }

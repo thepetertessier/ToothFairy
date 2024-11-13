@@ -3745,6 +3745,14 @@ PrefabInstance:
       propertyPath: m_InstanceId
       value: -84998
       objectReference: {fileID: 0}
+    - target: {fileID: 4472005871479952216, guid: 55c22e64ed86553408182bf6125a4eb2, type: 3}
+      propertyPath: zoomSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4472005871479952216, guid: 55c22e64ed86553408182bf6125a4eb2, type: 3}
+      propertyPath: zoomDuration
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 5712974762109520008, guid: 55c22e64ed86553408182bf6125a4eb2, type: 3}
       propertyPath: m_Mesh
       value: 

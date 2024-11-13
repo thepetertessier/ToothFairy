@@ -10,6 +10,7 @@ TagManager:
   - TeethBar
   - FlashlightEdges
   - KeyUI
+  - Bounds
   layers:
   - Default
   - TransparentFX
