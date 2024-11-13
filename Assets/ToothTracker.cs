@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ToothTracker : MonoBehaviour {
     [SerializeField] private int initialTeethCount = 8;
@@ -40,5 +42,9 @@ public class ToothTracker : MonoBehaviour {
 
     public int GetMaxTeethCount() {
         return maxTeethCount;
+    }
+
+    public void ResetTeethCount() {
+        teethCount = initialTeethCount;
     }
 }
