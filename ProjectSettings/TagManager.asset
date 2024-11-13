@@ -11,6 +11,7 @@ TagManager:
   - FlashlightEdges
   - KeyUI
   - Bounds
+  - Audio
   layers:
   - Default
   - TransparentFX
