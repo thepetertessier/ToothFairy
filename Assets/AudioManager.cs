@@ -28,6 +28,9 @@ public class AudioManager : MonoBehaviour {
 
     private Dictionary<string, AudioData> dataFromName = new();
     public AudioClip background;
+    private ToothstalkerAudio toothstalkerAudio;
+    private AudioSource sniffingSource;
+    private bool sniffingIsActive = true;
 
     private AudioData GetDataFromName(string name) {
         if (dataFromName.TryGetValue(name, out AudioData data)) {
@@ -44,11 +47,26 @@ public class AudioManager : MonoBehaviour {
                 dataFromName[audioData.name] = audioData;
             }
         }
+        toothstalkerAudio = FindAnyObjectByType<ToothstalkerAudio>();
+        AudioData sniffingData = GetDataFromName("sniffing");
+        sniffingSource = sniffingData.source;
+        sniffingSource.clip = sniffingData.clip;
     }
 
     private void Start() {
         musicSource.clip = background;
         musicSource.Play();
+
+        sniffingSource.Play();
+        sniffingSource.loop = true;
+    }
+
+    private void Update() {
+        sniffingSource.volume = sniffingIsActive ? toothstalkerAudio.GetVolume() : 0;
+    }
+
+    public void SetSniffingActive(bool active) {
+        sniffingIsActive = active;
     }
 
     public void PlaySFX(string name, float volumeScale = 1f) {

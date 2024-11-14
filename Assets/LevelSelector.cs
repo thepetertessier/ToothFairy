@@ -11,9 +11,11 @@ public class LevelSelector : MonoBehaviour {
     [SerializeField] private FloorController floorController;
     [SerializeField] private ToothstalkerAI toothstalkerAI;
     [SerializeField] private List<MonoBehaviour> initializables; // Store scripts that implement IInitializable
+    private AudioManager audioManager;
 
     private void Awake() {
         AutoPopulateInitializables();
+        audioManager = FindAnyObjectByType<AudioManager>();
     }
 
     private void AutoPopulateInitializables() {
@@ -31,6 +33,7 @@ public class LevelSelector : MonoBehaviour {
     private void LoadLevel(LevelConfig levelConfig) {
         ApplyLevelConfig(levelConfig);
         InitializeAll();
+        audioManager.PlaySFX("enter");
     }
 
     public void LoadNextLevel() {

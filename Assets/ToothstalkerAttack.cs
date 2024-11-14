@@ -55,6 +55,7 @@ public class ToothstalkerAttack : MonoBehaviour {
         playerMovement.SetCanMove(false);
         playerMovement.TurnOffLight();
         audioManager.PlaySFX("dying");
+        audioManager.SetSniffingActive(false);
         cameraPulse.Shake();
         redCornersEffect.ActivateRedCorners();
         redLightFlash.StartFlashing();
@@ -127,6 +128,7 @@ public class ToothstalkerAttack : MonoBehaviour {
         cameraPulse.StopShaking();
         cameraFollow.ResetZoom();
         audioManager.PlaySFX("post trauma");
+        audioManager.SetSniffingActive(true);
     }
 
     private void RestartJustFinished() {
