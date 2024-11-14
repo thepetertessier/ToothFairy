@@ -126,6 +126,7 @@ public class ToothstalkerAttack : MonoBehaviour {
         redLightFlash.StopFlashing();
         cameraPulse.StopShaking();
         cameraFollow.ResetZoom();
+        audioManager.PlaySFX("post trauma");
     }
 
     private void RestartJustFinished() {

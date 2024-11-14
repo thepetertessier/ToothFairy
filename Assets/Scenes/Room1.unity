@@ -2921,6 +2921,37 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1368148771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1368148772}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1368148772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368148771}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3233526133985747237}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1368822008
 Mesh:
   m_ObjectHideFlags: 0
@@ -7446,6 +7477,7 @@ Transform:
   - {fileID: 7740593748929687108}
   - {fileID: 7624860437630256995}
   - {fileID: 1954392364684309396}
+  - {fileID: 1368148772}
   m_Father: {fileID: 409384816996454282}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3235131409865480474
@@ -11654,6 +11686,10 @@ MonoBehaviour:
   - name: horror hit
     clip: {fileID: 8300000, guid: 47605c6f436b16f4096fa8f562d7c004, type: 3}
     source: {fileID: 7798275775661491920}
+    volumeScale: 1
+  - name: post trauma
+    clip: {fileID: 8300000, guid: ff0a0fe45ea6f1649a80a87ad9d6cc24, type: 3}
+    source: {fileID: 7199451552579269363}
     volumeScale: 1
   background: {fileID: 8300000, guid: 7a012657c96e7f645981868d64dcdd9e, type: 3}
 --- !u!1 &6166829730857497599
