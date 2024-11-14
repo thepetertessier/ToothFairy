@@ -15,7 +15,7 @@ public enum ToothstalkerState {
     None
 }
 
-public class ToothstalkerAI : MonoBehaviour {
+public class ToothstalkerAI : MonoBehaviour, IInitializable {
     [SerializeField] private float baseSpeed = 1f;
     [SerializeField] private float pauseDuration = 2f; // time in seconds to pause
     [SerializeField] private float alertRadius = 3f; // detection radius for player
@@ -35,6 +35,11 @@ public class ToothstalkerAI : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     private ToothstalkerAttack toothstalkerAttack;
     private ToothstalkerAnimation toothstalkerAnimation;
+    private Vector3 initPosition;
+
+    public void Initialize() {
+        transform.position = initPosition;
+    }
 
     public void SetStats(float baseSpeed, float pauseDuration, float alertRadius) {
         this.baseSpeed = baseSpeed;
@@ -58,6 +63,7 @@ public class ToothstalkerAI : MonoBehaviour {
 
         currentPatrolPoint = "11";
         currentTarget = patrolPoints[currentPatrolPoint].position;
+        initPosition = transform.position;
     }
 
     private void Start(){

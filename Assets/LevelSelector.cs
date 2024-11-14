@@ -1,31 +1,69 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
-public class LevelSelector : MonoBehaviour
-{
+public interface IInitializable {
+    void Initialize();
+}
+
+public class LevelSelector : MonoBehaviour {
     [SerializeField] private LevelConfig[] levelConfigs;
-    [SerializeField] private LevelManager levelManager;
+    [SerializeField] private FloorController floorController;
+    [SerializeField] private ToothstalkerAI toothstalkerAI;
+    [SerializeField] private List<MonoBehaviour> initializables; // Store scripts that implement IInitializable
+    private LevelConfig currentLevel;
 
-    public void LoadLevel(int index)
-    {
-        if (index < levelConfigs.Length)
-        {
-            LoadLevel(levelConfigs[index]);
+    private void Awake() {
+        AutoPopulateInitializables();
+    }
+
+    private void AutoPopulateInitializables() {
+        // Clear the list to avoid duplicates
+        initializables.Clear();
+
+        // Find all objects that implement IInitializable in the scene
+        foreach (var initializable in FindObjectsOfType<MonoBehaviour>()) {
+            if (initializable is IInitializable) {
+                initializables.Add(initializable);
+            }
         }
     }
 
     private void LoadLevel(LevelConfig levelConfig) {
-        levelManager.SetLevelConfig(levelConfig);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Reload the same scene with new config
+        ApplyLevelConfig(levelConfig);
+        InitializeAll();
     }
 
     public void LoadNextLevel() {
-        Debug.Log("000");
-        Debug.Log($"Loading next level: {levelManager.GetLevelConfig().nextLevel}");
-        LoadLevel(levelManager.GetLevelConfig().nextLevel);
+        Debug.Log($"Loading next level: {currentLevel.nextLevel}");
+        LoadLevel(currentLevel.nextLevel);
     }
 
-    public void LoadFirstLevel() {
-        LoadLevel(0);
+    public void Start() {
+        currentLevel = levelConfigs[0];
+        LoadLevel(currentLevel);
+    }
+
+    public void InitializeAll() {
+        foreach (var item in initializables) {
+            if (item is IInitializable initializable) {
+                initializable.Initialize();
+            }
+        }
+    }
+
+    private void ApplyLevelConfig(LevelConfig levelConfig) {
+        floorController.SetColor(levelConfig.floorColor);
+
+        // Set Toothstalker properties
+        toothstalkerAI.SetStats(
+            levelConfig.toothstalkerSpeed,
+            levelConfig.toothstalkerPauseDuration,
+            levelConfig.toothstalkerDetectionRadius);
+    }
+
+    [ExecuteAlways]
+    private void OnValidate()
+    {
+        AutoPopulateInitializables();
     }
 }

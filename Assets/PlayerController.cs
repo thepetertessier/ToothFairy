@@ -12,7 +12,7 @@ public enum PlayerDirection {
     Left
 }
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IInitializable
 {
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private GameObject playerLight;
@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     public PlayerDirection direction;
     private Transform flashlight;
     private bool canMove = true;
+    private Vector3 initPosition;
 
     private void Awake() {
         direction = PlayerDirection.Up;
@@ -31,9 +32,11 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         flashlight = transform.GetChild(0).GetChild(0).GetComponent<Transform>();
+        initPosition = transform.position;
     }
 
-    private void Start() {
+    public void Initialize() {
+        transform.position = initPosition;
         UpdateDirection();
         UpdateFlashlightDirection();
         animator.SetInteger("Direction", GetDirectionInt(direction));

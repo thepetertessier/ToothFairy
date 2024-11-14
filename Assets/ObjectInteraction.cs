@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ObjectInteraction : MonoBehaviour
+public abstract class ObjectInteraction : MonoBehaviour, IInitializable
 {
     private float interactionTime;
     private bool isPlayerNearby = false;
@@ -14,7 +14,12 @@ public abstract class ObjectInteraction : MonoBehaviour
     private CameraFollow cameraFollow;
     private ToothstalkerAI toothstalkerAI;
     protected AudioManager audioManager;
+    private bool hasInteracted = false;
     private string clip;
+
+    public void Initialize() {
+        ResetState();
+    }
 
     private void Awake()
     {
@@ -32,6 +37,7 @@ public abstract class ObjectInteraction : MonoBehaviour
     protected virtual void CustomAwake() { }
 
     protected virtual void Update() {
+        if (hasInteracted) return;
         if (PlayerCanInteract()) {
             FixLoadingBarPosition();
 
@@ -80,7 +86,11 @@ public abstract class ObjectInteraction : MonoBehaviour
     protected virtual void CompleteInteraction() {
         HaltInteraction();
         // never allow to be interacted again
-        this.enabled = false;
+        hasInteracted = true;
+    }
+
+    protected virtual void ResetState() {
+        hasInteracted = false;
     }
 
     protected virtual void HaltInteraction() {

@@ -12,7 +12,7 @@ public class ToothTracker : MonoBehaviour {
     private AudioManager audioManager;
 
     private void Awake() {
-        teethCount = initialTeethCount;
+        ResetTeethCount();
         teethBarUI = GameObject.FindGameObjectWithTag("TeethBar").GetComponent<TeethBarUI>();
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         teethBarUI.Initialize(initialTeethCount, maxTeethCount);

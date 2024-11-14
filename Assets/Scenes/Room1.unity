@@ -973,12 +973,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386061402}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1157458453}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &386061404
 MonoBehaviour:
@@ -993,7 +993,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverScreen: {fileID: 8001607094607959898}
-  levelSelector: {fileID: 1416427493}
 --- !u!114 &386061405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2522,11 +2521,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6515210769519736158}
-  - {fileID: 1416427494}
-  - {fileID: 386061403}
-  - {fileID: 4986272801881873016}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1157458454
@@ -3211,7 +3206,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1416427494}
   - component: {fileID: 1416427493}
-  - component: {fileID: 1416427495}
   m_Layer: 0
   m_Name: Level Manager
   m_TagString: Untagged
@@ -3236,7 +3230,26 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3721a96b741df8a45a80a5d99e9dced1, type: 2}
   - {fileID: 11400000, guid: 2fc8f205d9b8eaf4db32e84c2e320a3c, type: 2}
   - {fileID: 11400000, guid: 61679114ac8832d49980adad2197d4db, type: 2}
-  levelManager: {fileID: 1416427495}
+  floorController: {fileID: 9084187990759455494}
+  toothstalkerAI: {fileID: 3966777507281175229}
+  initializables:
+  - {fileID: 790596491875604391}
+  - {fileID: 2247839093894806400}
+  - {fileID: 2435500556238891885}
+  - {fileID: 2891691611022837045}
+  - {fileID: 3237536049089573629}
+  - {fileID: 3966777507281175229}
+  - {fileID: 4186308625790612142}
+  - {fileID: 4413317455768383611}
+  - {fileID: 4771162534427798692}
+  - {fileID: 5974410117203205695}
+  - {fileID: 6173178628217048716}
+  - {fileID: 6594136829395752819}
+  - {fileID: 6751256013162154989}
+  - {fileID: 8473369131011613486}
+  - {fileID: 8510757997622300818}
+  - {fileID: 8811305594888765996}
+  - {fileID: 8860858816651644999}
 --- !u!4 &1416427494
 Transform:
   m_ObjectHideFlags: 0
@@ -3250,23 +3263,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1157458453}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1416427495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1416427492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 030b324444851d141a2351c75c2dec39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelConfig: {fileID: 11400000, guid: 410f20130f361f949bb28bc0cfdb85e1, type: 2}
-  floorController: {fileID: 9084187990759455494}
-  toothstalkerAI: {fileID: 3966777507281175229}
 --- !u!43 &1857925255
 Mesh:
   m_ObjectHideFlags: 0
@@ -9924,7 +9922,7 @@ RectTransform:
   - {fileID: 2940146557090227877}
   - {fileID: 1980168677609415232}
   - {fileID: 4748941551472295325}
-  m_Father: {fileID: 1157458453}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -10912,7 +10910,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74ae971fd9724db4d843540f59bf73a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toothTracker: {fileID: 0}
   toothImages: []
 --- !u!212 &5682453225933806234
 SpriteRenderer:
@@ -11245,9 +11242,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.43710685, g: 0.4289669, b: 0.12439671, a: 1}
+    m_PressedColor: {r: 0.32389933, g: 0.31931585, b: 0.31931585, a: 1}
+    m_SelectedColor: {r: 0.8459119, g: 0.77827555, b: 0.2620198, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -11267,7 +11264,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 386061404}
         m_TargetAssemblyTypeName: GameRestarter, Assembly-CSharp
         m_MethodName: RestartGame
         m_Mode: 1
@@ -11866,7 +11863,7 @@ Transform:
   - {fileID: 7632492082690430997}
   - {fileID: 4477006257939079270}
   - {fileID: 7540473011221195346}
-  m_Father: {fileID: 1157458453}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!222 &6538772659549084374
 CanvasRenderer:
@@ -14363,3 +14360,7 @@ SceneRoots:
   - {fileID: 2919339741068125300}
   - {fileID: 5727497246495179492}
   - {fileID: 4551998214306694382}
+  - {fileID: 6515210769519736158}
+  - {fileID: 1416427494}
+  - {fileID: 386061403}
+  - {fileID: 4986272801881873016}

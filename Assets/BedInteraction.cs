@@ -47,4 +47,9 @@ public class BedInteraction : ObjectInteraction
     protected override string GetSFX() {
         return audioManager.GetRandomRufflingSound();
     }
+
+    protected override void ResetState() {
+        base.ResetState();
+        bedSpriteRenderer.color = Color.white;
+    }
 }

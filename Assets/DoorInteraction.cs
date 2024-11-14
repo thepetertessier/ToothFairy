@@ -6,6 +6,7 @@ public class DoorInteraction : ObjectInteraction
 {
     [SerializeField] private float unlockDuration = 6f;
     [SerializeField] private Sprite unlockedSprite;
+    private Sprite defaultSprite;
     private KeyTracker keyTracker;
     private SpriteRenderer doorRenderer;
     private BoxCollider2D doorCollider;
@@ -15,6 +16,7 @@ public class DoorInteraction : ObjectInteraction
         Transform parentTransform = transform.parent;
         doorRenderer = parentTransform.GetComponent<SpriteRenderer>();
         doorCollider = parentTransform.GetComponent<BoxCollider2D>();
+        defaultSprite = doorRenderer.sprite;
     }
 
     protected override void CompleteInteraction() {
@@ -42,5 +44,12 @@ public class DoorInteraction : ObjectInteraction
     protected override string GetSFX()
     {
         return "key turning";
+    }
+
+    protected override void ResetState()
+    {
+        base.ResetState();
+        doorRenderer.sprite = defaultSprite;
+        doorCollider.enabled = true;
     }
 }

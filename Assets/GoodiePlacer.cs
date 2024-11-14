@@ -2,25 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoodiePlacer : MonoBehaviour {
+public class GoodiePlacer : MonoBehaviour, IInitializable {
     [SerializeField] private int teethToPlace = 5;
 
-    private readonly HashSet<string> bedsWithKey = new();
-    private readonly HashSet<string> bedsWithTeeth = new();
+    private HashSet<string> bedsWithKey = new();
+    private HashSet<string> bedsWithTeeth = new();
+    private readonly List<string> bedNames = new();
 
     private void Awake() {
-        Setup();
-    }
-
-    private void Setup() {
         GameObject[] beds = GameObject.FindGameObjectsWithTag("Bed");
-        List<string> bedNames = new();
         foreach (GameObject bed in beds) {
             bedNames.Add(bed.name);
         }
-        // If there are no beds, we can't place anything
-        if (bedNames.Count == 0) return;
+    }
 
+    private void PlaceGoodies() {
+        if (bedNames.Count == 0) return;
         // Choose a random bed to have the key
         string keyBed = PopRandom(bedNames);
         bedsWithKey.Add(keyBed);
@@ -31,6 +28,12 @@ public class GoodiePlacer : MonoBehaviour {
             string bed = PopRandom(bedNames);
             bedsWithTeeth.Add(bed);
         }
+    }
+
+    public void Initialize() {
+        bedsWithKey = new HashSet<string>();
+        bedsWithTeeth = new HashSet<string>();
+        PlaceGoodies();
     }
 
     private string PopRandom(List<string> strings) {

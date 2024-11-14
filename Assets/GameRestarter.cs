@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +6,6 @@ public class GameRestarter : MonoBehaviour {
     private CameraFollow cameraFollow;
     private PlayerMovement playerMovement;
     [SerializeField] private GameObject gameOverScreen;
-    [SerializeField] private LevelSelector levelSelector;
 
     private void Awake() {
         toothTracker = FindAnyObjectByType<ToothTracker>();
@@ -16,8 +13,7 @@ public class GameRestarter : MonoBehaviour {
         playerMovement = FindAnyObjectByType<PlayerMovement>();
     }
     public void RestartGame() {
-        toothTracker.ResetTeethCount();
-        levelSelector.LoadFirstLevel();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void Update() {
