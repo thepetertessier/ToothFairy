@@ -9,26 +9,20 @@ public class ToothTracker : MonoBehaviour {
     [SerializeField] private int maxTeethCount = 10;
     private int teethCount;
     private TeethBarUI teethBarUI;
-    private ToothTracker instance;
     private AudioManager audioManager;
 
     private void Awake() {
-        if (instance == null) {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        } else {
-            Destroy(gameObject);
-        }
         teethCount = initialTeethCount;
         teethBarUI = GameObject.FindGameObjectWithTag("TeethBar").GetComponent<TeethBarUI>();
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        teethBarUI.Initialize(initialTeethCount, maxTeethCount);
     }
 
     public void CollectTooth() {
         if (teethCount < maxTeethCount) {
             teethCount++;
         } //else drop tooth?
-        teethBarUI.UpdateTeethBar();
+        teethBarUI.UpdateTeethBar(teethCount);
         audioManager.PlaySFX("tooth collected");
     }
 
@@ -36,7 +30,7 @@ public class ToothTracker : MonoBehaviour {
         if (teethCount > 0) {
             teethCount--;
         }
-        teethBarUI.UpdateTeethBar();
+        teethBarUI.UpdateTeethBar(teethCount);
     }
 
     public int GetTeethCount() {

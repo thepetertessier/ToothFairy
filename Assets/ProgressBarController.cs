@@ -13,7 +13,9 @@ public class ProgressBarController : MonoBehaviour
     }
 
     public void TurnOff() {
-        image.enabled = false;
+        if (image != null) {
+            image.enabled = false;
+        }
         SetProgress(0f);
     }
 

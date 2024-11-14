@@ -5,25 +5,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TeethBarUI : MonoBehaviour {
-    [SerializeField] private ToothTracker toothTracker;
     [SerializeField] private Image[] toothImages; // Array to hold references to the 10 tooth images
 
-    private void Awake() {
-        toothTracker = FindAnyObjectByType<ToothTracker>();
-
-        toothImages = new Image[toothTracker.GetMaxTeethCount()];
+    public void Initialize(int startingTeethCount, int maxTeethCount) {
+        toothImages = new Image[maxTeethCount];
         for (int i = 0; i < toothImages.Length; i++) {
             toothImages[i] = transform.GetChild(i).GetComponent<Image>();
         }
+        UpdateTeethBar(startingTeethCount);
     }
 
-    private void Start() {
-        UpdateTeethBar();
-    }
-
-    public void UpdateTeethBar() {
-        int currentTeeth = toothTracker.GetTeethCount();
-        
+    public void UpdateTeethBar(int currentTeeth) {        
         // Update each tooth icon based on the number of collected teeth
         for (int i = 0; i < toothImages.Length; i++) {
             if (i < currentTeeth) {

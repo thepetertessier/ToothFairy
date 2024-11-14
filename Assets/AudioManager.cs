@@ -23,6 +23,8 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private AudioSource musicSource;
 
     [SerializeField] private List<AudioData> audioDataList; // List to hold all audio data
+    private Dictionary<AudioSource, Coroutine> fadeOutCoroutines = new();
+
 
     private Dictionary<string, AudioData> dataFromName = new();
     public AudioClip background;
@@ -48,33 +50,52 @@ public class AudioManager : MonoBehaviour {
         musicSource.clip = background;
         musicSource.Play();
     }
-
     public void PlaySFX(string name, float volumeScale = 1f) {
         AudioData data = GetDataFromName(name);
+        StopExistingFadeOut(data.source, data.volumeScale);
         data.source.PlayOneShot(data.clip, volumeScale * data.volumeScale);
     }
 
     public void StopSFX(string name, float fadeOutDuration = 1f) {
         AudioData data = GetDataFromName(name);
+        if (data.source == null) return;
+
         if (data.source.isPlaying) {
             if (fadeOutDuration > 0f) {
-                StartCoroutine(FadeOutAndStop(data.source, fadeOutDuration));
+                StopExistingFadeOut(data.source);
+                fadeOutCoroutines[data.source] = StartCoroutine(FadeOutAndStop(data.source, fadeOutDuration));
             } else {
                 data.source.Stop();
             }
         }
     }
 
-    private IEnumerator FadeOutAndStop(AudioSource source, float duration) {
+    private void StopExistingFadeOut(AudioSource source, float volumeScale = -1f) {
+        if (fadeOutCoroutines.ContainsKey(source) && fadeOutCoroutines[source] != null) {
+            StopCoroutine(fadeOutCoroutines[source]);
+            fadeOutCoroutines[source] = null;
+            if (volumeScale != -1f) {
+                source.volume = volumeScale;
+            }
+        }
+    }
+
+    private IEnumerator FadeOutAndStop(AudioSource source, float duration)
+    {
         float startVolume = source.volume;
-        while (source.volume > 0) {
+        while (source.volume > 0)
+        {
             source.volume -= startVolume * Time.deltaTime / duration;
             yield return null;
         }
 
         source.Stop();
         source.volume = startVolume; // Reset the volume for the next play
+
+        // Clear the coroutine reference after finishing
+        fadeOutCoroutines[source] = null;
     }
+
 
     public string GetRandomRufflingSound() {
         string[] rufflingSounds = { "ruffling1", "ruffling2", "ruffling3", "ruffling4" };

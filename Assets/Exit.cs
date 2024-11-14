@@ -5,13 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class Exit : MonoBehaviour
 {
-    private void LoadNextScene() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
+    [SerializeField] private LevelSelector levelSelector;
 
     private void OnTriggerEnter2D(Collider2D other) {
+        Debug.Log("111");
         if (other.CompareTag("Player")) {
-            LoadNextScene();
+            levelSelector.LoadNextLevel();
         }
     }
 }

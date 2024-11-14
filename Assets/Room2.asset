@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb478a8fd0c99db468ce6ad24c10a842, type: 3}
+  m_Name: Room2
+  m_EditorClassIdentifier: 
+  floorColor: {r: 0.22907506, g: 0.2735849, b: 0.058072276, a: 1}
+  toothstalkerSpeed: 0.9
+  toothstalkerPauseDuration: 2
+  toothstalkerDetectionRadius: 2
+  nextLevel: {fileID: 11400000, guid: 2fc8f205d9b8eaf4db32e84c2e320a3c, type: 2}

@@ -34,7 +34,7 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (player != null)
+        if (player != null && cam != null)
         {
             // Step 1: Center the camera on the player with smoothing
             Vector3 targetPosition = new(player.position.x, player.position.y, transform.position.z);
@@ -65,6 +65,7 @@ public class CameraFollow : MonoBehaviour
     }
 
     private void ZoomTo(float size) {
+        if (cam == null) return;
         isZooming = true;
         zoomLerpTime = 0f;
         fromSize = cam.orthographicSize;

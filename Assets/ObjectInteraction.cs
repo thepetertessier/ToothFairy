@@ -59,7 +59,7 @@ public abstract class ObjectInteraction : MonoBehaviour
     }
 
     protected virtual bool PlayerCanInteract() {
-        return isPlayerNearby && PlayerIsActing() && PlayerIsFacingObject(player, transform, playerMovement.GetPlayerDirection()) && !toothstalkerAI.IsAttacking();
+        return isPlayerNearby && PlayerIsActing() && PlayerIsFacingObject(player, transform, playerMovement.GetPlayerDirection()) && !toothstalkerAI.IsAttacking() && playerMovement.enabled;
     }
 
     private bool PlayerIsActing()
@@ -87,10 +87,10 @@ public abstract class ObjectInteraction : MonoBehaviour
         // always do this, even if interrupted
         isInteracting = false;
         holdTime = 0f;
-        progressBarController.TurnOff();
-        playerMovement.TurnOnLight();
-        cameraFollow.ResetZoom();
-        audioManager.StopSFX(clip);
+        progressBarController?.TurnOff();
+        playerMovement?.TurnOnLight();
+        cameraFollow?.ResetZoom();
+        audioManager?.StopSFX(clip);
     }
 
     protected void FixLoadingBarPosition() {
@@ -125,9 +125,7 @@ public abstract class ObjectInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerNearby = false;
-            isInteracting = false;
-            holdTime = 0f;
-            progressBarController.TurnOff();
+            HaltInteraction();
         }
     }
 }
