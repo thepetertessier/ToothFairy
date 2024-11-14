@@ -2492,50 +2492,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &1157458451
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1157458453}
-  - component: {fileID: 1157458454}
-  m_Layer: 0
-  m_Name: Persistent Singleton
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1157458453
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1157458451}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1157458454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1157458451}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce6a84a67cbd1aa4ba5e582e8196a6dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!43 &1227954299
 Mesh:
   m_ObjectHideFlags: 0
@@ -11558,6 +11514,14 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: bb56b76cf631a114daf879999d38b786, type: 3}
     source: {fileID: 4232728032520752356}
     volumeScale: 1
+  - name: sharp attack
+    clip: {fileID: 8300000, guid: 4aaad88d9066e794598d362bf741a8f4, type: 3}
+    source: {fileID: 7798275775661491920}
+    volumeScale: 1
+  - name: dying
+    clip: {fileID: 8300000, guid: cf983f52b4ee72c4bb40c7d8e676bd51, type: 3}
+    source: {fileID: 4320219662966079139}
+    volumeScale: 1
   background: {fileID: 8300000, guid: 7a012657c96e7f645981868d64dcdd9e, type: 3}
 --- !u!1 &6166829730857497599
 GameObject:
@@ -14353,7 +14317,6 @@ GameObject:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1157458453}
   - {fileID: 409384816996454282}
   - {fileID: 8124282006530224203}
   - {fileID: 9012981263826146791}

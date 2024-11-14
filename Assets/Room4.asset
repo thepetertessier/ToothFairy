@@ -15,5 +15,5 @@ MonoBehaviour:
   floorColor: {r: 0.15723258, g: 0.07441353, b: 0.07441353, a: 1}
   toothstalkerSpeed: 1.5
   toothstalkerPauseDuration: 1
-  toothstalkerDetectionRadius: 3
+  toothstalkerDetectionRadius: 2.2
   nextLevel: {fileID: 11400000, guid: 410f20130f361f949bb28bc0cfdb85e1, type: 2}
