@@ -6,11 +6,11 @@ public interface IInitializable {
 }
 
 public class LevelSelector : MonoBehaviour {
+    [SerializeField] private LevelConfig currentLevel;
     [SerializeField] private LevelConfig[] levelConfigs;
     [SerializeField] private FloorController floorController;
     [SerializeField] private ToothstalkerAI toothstalkerAI;
     [SerializeField] private List<MonoBehaviour> initializables; // Store scripts that implement IInitializable
-    private LevelConfig currentLevel;
 
     private void Awake() {
         AutoPopulateInitializables();

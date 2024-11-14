@@ -16,6 +16,7 @@ public abstract class ObjectInteraction : MonoBehaviour, IInitializable
     protected AudioManager audioManager;
     private bool hasInteracted = false;
     private string clip;
+    private ToothstalkerVisibility toothstalkerVisibility;
 
     public void Initialize() {
         ResetState();
@@ -30,6 +31,7 @@ public abstract class ObjectInteraction : MonoBehaviour, IInitializable
         toothstalkerAI = FindAnyObjectByType<ToothstalkerAI>();
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         clip = GetSFX();
+        toothstalkerVisibility = FindAnyObjectByType<ToothstalkerVisibility>();
         CustomAwake();
     }
 
@@ -61,6 +63,11 @@ public abstract class ObjectInteraction : MonoBehaviour, IInitializable
         }
         else if (isInteracting) {
             HaltInteraction();
+        }
+
+        if (isInteracting && toothstalkerAI.IsAlert()) {
+            // and toothStalker is within view of the camera
+            audioManager.PlaySFX("horror hit");
         }
     }
 

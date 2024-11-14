@@ -53,8 +53,18 @@ public class AudioManager : MonoBehaviour {
 
     public void PlaySFX(string name, float volumeScale = 1f) {
         AudioData data = GetDataFromName(name);
+        PlaySFX(data, volumeScale);
+    }
+
+    public void PlaySFX(AudioData data, float volumeScale = 1f) {
         StopExistingFadeOut(data.source, data.volumeScale);
         data.source.PlayOneShot(data.clip, volumeScale * data.volumeScale);
+    }
+
+    public void PlayOnce(string name, float volumeScale = 1f) {
+        AudioData data = GetDataFromName(name);
+        if (data.source.isPlaying) return;
+        PlaySFX(data, volumeScale);
     }
 
     public void StopSFX(string name, float fadeOutDuration = 1f) {

@@ -3181,6 +3181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd80132dcbdd5e4aa2aca11ae1d1245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentLevel: {fileID: 0}
   levelConfigs:
   - {fileID: 11400000, guid: 410f20130f361f949bb28bc0cfdb85e1, type: 2}
   - {fileID: 11400000, guid: 3721a96b741df8a45a80a5d99e9dced1, type: 2}
@@ -10471,6 +10472,7 @@ GameObject:
   - component: {fileID: 5171979849348029726}
   - component: {fileID: 2232344626994636816}
   - component: {fileID: 2842340619168850258}
+  - component: {fileID: 6003726503437881257}
   m_Layer: 6
   m_Name: Toothstalker
   m_TagString: Untagged
@@ -11361,6 +11363,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.12}
   m_Size: {x: 0.25, y: 0.08}
   m_Direction: 1
+--- !u!114 &6003726503437881257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5333495083171633767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18cf5e9b62057744e951736175570a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6011971157861021996
 GameObject:
   m_ObjectHideFlags: 0
@@ -11519,8 +11533,12 @@ MonoBehaviour:
     source: {fileID: 7798275775661491920}
     volumeScale: 1
   - name: dying
-    clip: {fileID: 8300000, guid: cf983f52b4ee72c4bb40c7d8e676bd51, type: 3}
+    clip: {fileID: 8300000, guid: f9e695c40cb5f704f8ba5c06abc9a75d, type: 3}
     source: {fileID: 4320219662966079139}
+    volumeScale: 1
+  - name: horror hit
+    clip: {fileID: 8300000, guid: 47605c6f436b16f4096fa8f562d7c004, type: 3}
+    source: {fileID: 7798275775661491920}
     volumeScale: 1
   background: {fileID: 8300000, guid: 7a012657c96e7f645981868d64dcdd9e, type: 3}
 --- !u!1 &6166829730857497599

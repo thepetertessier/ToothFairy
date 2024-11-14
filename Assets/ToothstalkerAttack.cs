@@ -16,6 +16,7 @@ public class ToothstalkerAttack : MonoBehaviour {
     private bool justFinished = false;
     private bool canPressAgain = true;
     private ToothstalkerAnimation toothstalkerAnimation;
+    private AudioManager audioManager;
 
     public bool JustFinished() {
         return justFinished;
@@ -26,6 +27,7 @@ public class ToothstalkerAttack : MonoBehaviour {
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         toothTracker = FindAnyObjectByType<ToothTracker>();
         toothstalkerAnimation = GetComponent<ToothstalkerAnimation>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -44,6 +46,7 @@ public class ToothstalkerAttack : MonoBehaviour {
         progressBarController.TurnOn();
         playerMovement.SetCanMove(false);
         playerMovement.TurnOffLight();
+        audioManager.PlaySFX("dying");
     }
 
     private void UpdateProgress()
@@ -86,6 +89,8 @@ public class ToothstalkerAttack : MonoBehaviour {
         // Reset progress as penalty
         progress -= bitePenalty;
         progress = Mathf.Clamp01(progress);
+
+        audioManager.PlaySFX("sharp attack");
     }
 
     private void ReleasePlayer() {
@@ -98,6 +103,8 @@ public class ToothstalkerAttack : MonoBehaviour {
 
         // Reset justFinished to false in a bit
         Invoke(nameof(RestartJustFinished), 0.5f);
+
+        audioManager.StopSFX("dying");
     }
 
     private void RestartJustFinished() {
