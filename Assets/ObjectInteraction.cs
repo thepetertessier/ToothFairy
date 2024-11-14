@@ -67,7 +67,7 @@ public abstract class ObjectInteraction : MonoBehaviour, IInitializable
 
         if (isInteracting && toothstalkerAI.IsAlert()) {
             // and toothStalker is within view of the camera
-            audioManager.PlaySFX("horror hit");
+            audioManager.PlayOnce("horror hit");
         }
     }
 

@@ -17,6 +17,10 @@ public class ToothstalkerAttack : MonoBehaviour {
     private bool canPressAgain = true;
     private ToothstalkerAnimation toothstalkerAnimation;
     private AudioManager audioManager;
+    private CameraPulse cameraPulse;
+    private RedCornersEffect redCornersEffect;
+    private RedLightFlash redLightFlash;
+    private CameraFollow cameraFollow;
 
     public bool JustFinished() {
         return justFinished;
@@ -28,6 +32,10 @@ public class ToothstalkerAttack : MonoBehaviour {
         toothTracker = FindAnyObjectByType<ToothTracker>();
         toothstalkerAnimation = GetComponent<ToothstalkerAnimation>();
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        cameraPulse = FindAnyObjectByType<CameraPulse>();
+        redCornersEffect = FindAnyObjectByType<RedCornersEffect>();
+        redLightFlash = FindAnyObjectByType<RedLightFlash>();
+        cameraFollow = FindAnyObjectByType<CameraFollow>();
     }
 
     private void Update()
@@ -47,6 +55,15 @@ public class ToothstalkerAttack : MonoBehaviour {
         playerMovement.SetCanMove(false);
         playerMovement.TurnOffLight();
         audioManager.PlaySFX("dying");
+        cameraPulse.Shake();
+        redCornersEffect.ActivateRedCorners();
+        redLightFlash.StartFlashing();
+        cameraFollow.ResetZoom();
+        Invoke(nameof(ZoomIn), 1f);
+    }
+
+    private void ZoomIn() {
+        cameraFollow.ZoomInToTarget(10);
     }
 
     private void UpdateProgress()
@@ -105,6 +122,10 @@ public class ToothstalkerAttack : MonoBehaviour {
         Invoke(nameof(RestartJustFinished), 0.5f);
 
         audioManager.StopSFX("dying");
+        redCornersEffect.DeactivateRedCorners();
+        redLightFlash.StopFlashing();
+        cameraPulse.StopShaking();
+        cameraFollow.ResetZoom();
     }
 
     private void RestartJustFinished() {

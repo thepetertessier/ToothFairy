@@ -13,6 +13,7 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float normalSize = 5f; // Default orthographic size of the camera
     [SerializeField] private float zoomedSize = 3f;  // Smaller orthographic size for zoomed-in effect
     [SerializeField] private float zoomDuration = 0.6f; // Speed of zooming
+    private float currentDuration;
 
     private Vector3 velocity = Vector3.zero; // For smooth damping
     private float zoomLerpTime = 0f; // Keeps track of the zooming progress
@@ -30,6 +31,7 @@ public class CameraFollow : MonoBehaviour
         Transform upperRight = bounds.transform.GetChild(1);
         bottomLeftCorner = lowerLeft.position;
         topRightCorner = upperRight.position;
+        currentDuration = zoomDuration;
     }
 
     private void LateUpdate()
@@ -51,8 +53,9 @@ public class CameraFollow : MonoBehaviour
     /// <summary>
     /// Smoothly zooms the camera in by adjusting its orthographic size.
     /// </summary>
-    public void ZoomInToTarget()
+    public void ZoomInToTarget(float duration = -1)
     {
+        currentDuration = (duration == -1) ? zoomDuration : duration;
         ZoomTo(zoomedSize);
     }
 
@@ -61,6 +64,7 @@ public class CameraFollow : MonoBehaviour
     /// </summary>
     public void ResetZoom()
     {
+        currentDuration = zoomDuration;
         ZoomTo(normalSize);
     }
 
@@ -77,7 +81,7 @@ public class CameraFollow : MonoBehaviour
     /// </summary>
     private void HandleZoom() {
         if (isZooming) {
-            zoomLerpTime += Time.deltaTime / zoomDuration;
+            zoomLerpTime += Time.deltaTime / currentDuration;
             float smoothStep = Mathf.SmoothStep(fromSize, toSize, zoomLerpTime);
             cam.orthographicSize = smoothStep;
 
