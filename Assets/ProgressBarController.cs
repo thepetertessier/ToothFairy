@@ -9,6 +9,7 @@ public class ProgressBarController : MonoBehaviour
     private Image image;
 
     public void SetProgress(float progress) {
+        if (image == null) return;
         image.fillAmount = progress;
     }
 

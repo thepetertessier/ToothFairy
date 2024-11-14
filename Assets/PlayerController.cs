@@ -47,6 +47,11 @@ public class PlayerMovement : MonoBehaviour, IInitializable
         playerControls.Enable();
     }
 
+    private void OnDisable() {
+        playerControls.Disable();
+    }
+
+
     private void Update() {
         PlayerInput();
         UpdateDirection();

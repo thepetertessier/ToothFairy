@@ -50,6 +50,7 @@ public class AudioManager : MonoBehaviour {
         musicSource.clip = background;
         musicSource.Play();
     }
+
     public void PlaySFX(string name, float volumeScale = 1f) {
         AudioData data = GetDataFromName(name);
         StopExistingFadeOut(data.source, data.volumeScale);
@@ -63,7 +64,7 @@ public class AudioManager : MonoBehaviour {
         if (data.source.isPlaying) {
             if (fadeOutDuration > 0f) {
                 StopExistingFadeOut(data.source);
-                fadeOutCoroutines[data.source] = StartCoroutine(FadeOutAndStop(data.source, fadeOutDuration));
+                fadeOutCoroutines[data.source] = StartCoroutine(FadeOutAndStop(data.source, fadeOutDuration, data.volumeScale));
             } else {
                 data.source.Stop();
             }
@@ -80,7 +81,7 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    private IEnumerator FadeOutAndStop(AudioSource source, float duration)
+    private IEnumerator FadeOutAndStop(AudioSource source, float duration, float defaultVolume)
     {
         float startVolume = source.volume;
         while (source.volume > 0)
@@ -90,7 +91,7 @@ public class AudioManager : MonoBehaviour {
         }
 
         source.Stop();
-        source.volume = startVolume; // Reset the volume for the next play
+        source.volume = defaultVolume; // Reset the volume for the next play
 
         // Clear the coroutine reference after finishing
         fadeOutCoroutines[source] = null;

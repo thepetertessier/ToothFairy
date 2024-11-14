@@ -1005,7 +1005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce7fa3c5ee6b244295a0e3476e81df0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialTeethCount: 1
+  initialTeethCount: 5
   maxTeethCount: 10
 --- !u!43 &394612520
 Mesh:
