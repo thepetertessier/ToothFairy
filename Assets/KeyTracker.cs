@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class KeyTracker : MonoBehaviour
+public class KeyTracker : MonoBehaviour, IInitializable
 {
     public bool hasKey = false;
     private KeyUI keyUI;
@@ -21,5 +21,9 @@ public class KeyTracker : MonoBehaviour
         hasKey = true;
         keyUI.MakeKeyVisible();
         audioManager.PlaySFX("key collected"); 
+    }
+
+    public void Initialize() {
+        hasKey = false;
     }
 }

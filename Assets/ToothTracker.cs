@@ -10,6 +10,7 @@ public class ToothTracker : MonoBehaviour {
     private int teethCount;
     private TeethBarUI teethBarUI;
     private AudioManager audioManager;
+    public bool anyTeethCollected = false;
 
     private void Awake() {
         ResetTeethCount();
@@ -21,9 +22,10 @@ public class ToothTracker : MonoBehaviour {
     public void CollectTooth() {
         if (teethCount < maxTeethCount) {
             teethCount++;
+            audioManager.PlaySFX("tooth collected");
+            teethBarUI.UpdateTeethBar(teethCount);
         } //else drop tooth?
-        teethBarUI.UpdateTeethBar(teethCount);
-        audioManager.PlaySFX("tooth collected");
+        anyTeethCollected = true;
     }
 
     public void RemoveTooth() {

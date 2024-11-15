@@ -868,6 +868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialTeethCount: 2
   maxTeethCount: 10
+  anyTeethCollected: 0
 --- !u!114 &386061406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3565,6 +3566,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   opening: {fileID: 11400000, guid: 07847430bcdfd384d8964a6d20402429, type: 2}
+  afterGettingTooth: {fileID: 11400000, guid: e5429380fd28aca45bd286c31818be27, type: 2}
+  afterGettingKey: {fileID: 11400000, guid: c44e3fdd77fd20a4c8acbfb0f173f49f, type: 2}
 --- !u!43 &1433331544
 Mesh:
   m_ObjectHideFlags: 0
@@ -15266,11 +15269,11 @@ SceneRoots:
   m_Roots:
   - {fileID: 409384816996454282}
   - {fileID: 8124282006530224203}
-  - {fileID: 9012981263826146791}
   - {fileID: 2919339741068125300}
   - {fileID: 5727497246495179492}
   - {fileID: 4551998214306694382}
   - {fileID: 6515210769519736158}
   - {fileID: 1416427494}
+  - {fileID: 9012981263826146791}
   - {fileID: 386061403}
   - {fileID: 4986272801881873016}

@@ -33,6 +33,7 @@ public class LevelSelector : MonoBehaviour {
     }
 
     private void LoadLevel(LevelConfig levelConfig) {
+        currentLevel = levelConfig;
         ApplyLevelConfig(levelConfig);
         InitializeAll();
         audioManager.PlaySFX("enter");

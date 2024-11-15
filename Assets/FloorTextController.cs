@@ -19,7 +19,7 @@ public class FloorTextController : MonoBehaviour
 
     [Header("Display Settings")]
     [SerializeField] private float fadeDuration = 1f;
-    [SerializeField] private float defaultDuration = 3f;
+    [SerializeField] private float defaultDuration = 1f;
     [SerializeField] private float shakeIntensity = 0.05f;
     [SerializeField] private float flickerFrequency = 0.1f;
     [SerializeField] private float flickerIntensity = 0.2f;
@@ -109,11 +109,17 @@ public class FloorTextController : MonoBehaviour
         foreach (TextData textData in textDataList)
         {
             audioManager.PlaySFX("text reveal");
+            // yield return StartCoroutine(DisplayRoutine(
+            //     textData.text,
+            //     textData.customFadeDuration ?? fadeDuration,
+            //     textData.customDuration ?? defaultDuration,
+            //     textData.customShakeIntensity ?? shakeIntensity
+            // ));
             yield return StartCoroutine(DisplayRoutine(
                 textData.text,
-                textData.customFadeDuration ?? fadeDuration,
-                textData.customDuration ?? defaultDuration,
-                textData.customShakeIntensity ?? shakeIntensity
+                fadeDuration,
+                defaultDuration,
+                shakeIntensity
             ));
         }
     }

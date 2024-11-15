@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4601356f73c7414caae01b13f6b818a, type: 3}
-  m_Name: OpeningText
+  m_Name: AfterGettingKey
   m_EditorClassIdentifier: 
   textDataList:
-  - text: There you are...
-  - text: You're trapped here, all alone
-  - text: You need the key to escape. It's in one of the beds.
-  - text: You can search a bed by holding down "E"
+  - text: If it ever gets you, press "E" like your life depends on it. Then get the
+      heck away.
+  - text: The door is up here. Try not to die out there :)

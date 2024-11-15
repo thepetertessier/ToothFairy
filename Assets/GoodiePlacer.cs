@@ -31,6 +31,13 @@ public class GoodiePlacer : MonoBehaviour, IInitializable {
     }
 
     public void Initialize() {
+        // Re-populate bed names in case something changed between Awake and Initialize
+        bedNames.Clear();
+        GameObject[] beds = GameObject.FindGameObjectsWithTag("Bed");
+        foreach (GameObject bed in beds) {
+            bedNames.Add(bed.name);
+        }
+
         bedsWithKey = new HashSet<string>();
         bedsWithTeeth = new HashSet<string>();
         PlaceGoodies();
