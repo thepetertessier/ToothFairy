@@ -44,7 +44,7 @@ public class LevelSelector : MonoBehaviour {
     }
 
     public void Start() {
-        currentLevel = levelConfigs[0];
+        // currentLevel = levelConfigs[0];
         LoadLevel(currentLevel);
     }
 

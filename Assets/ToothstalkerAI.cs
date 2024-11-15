@@ -20,6 +20,7 @@ public class ToothstalkerAI : MonoBehaviour, IInitializable {
     [SerializeField] private float pauseDuration = 2f; // time in seconds to pause
     [SerializeField] private float alertRadius = 3f; // detection radius for player
     [SerializeField] private GameObject eyes;
+    [SerializeField] private float detectionMultiplier = 1.5f; // how much more it can detect when you are interacting
     private readonly float offsetY = 0.37f;
 
     private ToothstalkerState currentState;
@@ -36,6 +37,7 @@ public class ToothstalkerAI : MonoBehaviour, IInitializable {
     private ToothstalkerAttack toothstalkerAttack;
     private ToothstalkerAnimation toothstalkerAnimation;
     private Vector3 initPosition;
+    private bool playerIsInteracting = false;
 
     public void Initialize() {
         transform.position = initPosition;
@@ -72,6 +74,10 @@ public class ToothstalkerAI : MonoBehaviour, IInitializable {
 
     private void Update() {
         currentBehavior?.Invoke();
+    }
+
+    public void SetPlayerIsInteracting(bool isInteracting) {
+        playerIsInteracting = isInteracting;
     }
 
     private void SetOpacity(float alpha) {
@@ -132,10 +138,15 @@ public class ToothstalkerAI : MonoBehaviour, IInitializable {
         PauseIfReachesCurrentTarget();
 
         // Check for player within alert radius
-        if (DistanceFrom(player.position) <= alertRadius)
+        if (DistanceFrom(player.position) <= GetDetectionRadius())
         {
             SetState(ToothstalkerState.Pausing); // Pause briefly before alert
         }
+    }
+
+    private float GetDetectionRadius() {
+        float multiplier = playerIsInteracting ? detectionMultiplier : 1;
+        return alertRadius * multiplier;
     }
 
     private void PauseIfReachesCurrentTarget() {
@@ -204,7 +215,7 @@ public class ToothstalkerAI : MonoBehaviour, IInitializable {
 
         // When timer is done, transition based on currentState
         if (pauseTimer <= 0) {
-            if (DistanceFrom(player.position) <= alertRadius) {
+            if (DistanceFrom(player.position) <= GetDetectionRadius()) {
                 SetState(ToothstalkerState.Alert); // Transition to Alert if player is nearby
             } else {
                 SetState(ToothstalkerState.Patrolling); // Otherwise, go back to Patrolling

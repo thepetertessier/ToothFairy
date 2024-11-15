@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb478a8fd0c99db468ce6ad24c10a842, type: 3}
   m_Name: Room0
   m_EditorClassIdentifier: 
-  floorColor: {r: 0.7138364, g: 0.6101928, b: 0.48374757, a: 1}
+  floorColor: {r: 0.5188679, g: 0.40849578, b: 0.26840806, a: 1}
+  toothstalkerExists: 0
   toothstalkerSpeed: 0.5
   toothstalkerPauseDuration: 3
   toothstalkerDetectionRadius: 1.5

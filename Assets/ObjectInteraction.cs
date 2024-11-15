@@ -16,7 +16,6 @@ public abstract class ObjectInteraction : MonoBehaviour, IInitializable
     protected AudioManager audioManager;
     private bool hasInteracted = false;
     private string clip;
-    private ToothstalkerVisibility toothstalkerVisibility;
 
     public void Initialize() {
         ResetState();
@@ -31,7 +30,6 @@ public abstract class ObjectInteraction : MonoBehaviour, IInitializable
         toothstalkerAI = FindAnyObjectByType<ToothstalkerAI>();
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         clip = GetSFX();
-        toothstalkerVisibility = FindAnyObjectByType<ToothstalkerVisibility>();
         CustomAwake();
     }
 
@@ -45,6 +43,7 @@ public abstract class ObjectInteraction : MonoBehaviour, IInitializable
 
             if (!isInteracting) {
                 isInteracting = true;
+                toothstalkerAI.SetPlayerIsInteracting(true);
                 holdTime = 0f; // Reset hold time
                 playerMovement.TurnOffLight();
                 ActivateLoadingBar();
@@ -103,6 +102,7 @@ public abstract class ObjectInteraction : MonoBehaviour, IInitializable
     protected virtual void HaltInteraction() {
         // always do this, even if interrupted
         isInteracting = false;
+        toothstalkerAI.SetPlayerIsInteracting(false);
         holdTime = 0f;
         progressBarController?.TurnOff();
         playerMovement?.TurnOnLight();
