@@ -63,11 +63,6 @@ public abstract class ObjectInteraction : MonoBehaviour, IInitializable
         else if (isInteracting) {
             HaltInteraction();
         }
-
-        if (isInteracting && toothstalkerAI.IsAlert()) {
-            // and toothStalker is within view of the camera
-            audioManager.PlayOnce("horror hit");
-        }
     }
 
     protected virtual bool PlayerCanInteract() {

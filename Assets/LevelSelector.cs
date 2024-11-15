@@ -67,6 +67,10 @@ public class LevelSelector : MonoBehaviour {
             levelConfig.toothstalkerDetectionRadius);
     }
 
+    public string GetCurrentLevelName() {
+        return currentLevel.name;
+    }
+
     [ExecuteAlways]
     private void OnValidate()
     {

@@ -38,6 +38,7 @@ public class ToothstalkerAI : MonoBehaviour, IInitializable {
     private ToothstalkerAnimation toothstalkerAnimation;
     private Vector3 initPosition;
     private bool playerIsInteracting = false;
+    private AudioManager audioManager;
 
     public void Initialize() {
         transform.position = initPosition;
@@ -55,6 +56,7 @@ public class ToothstalkerAI : MonoBehaviour, IInitializable {
         spriteRenderer = GetComponent<SpriteRenderer>();
         toothstalkerAttack = GetComponent<ToothstalkerAttack>();
         toothstalkerAnimation = GetComponent<ToothstalkerAnimation>();
+        audioManager = FindAnyObjectByType<AudioManager>();
 
         patrolPoints = new Dictionary<string, Transform>();
         Transform patrolPointsParent = GameObject.Find("PatrolPoints").transform;
@@ -105,6 +107,7 @@ public class ToothstalkerAI : MonoBehaviour, IInitializable {
             case ToothstalkerState.Alert:
                 currentBehavior = Alert;
                 currentTarget = player.position;
+                audioManager.PlaySFX("horror hit");
                 break;
 
             case ToothstalkerState.Attacking:
