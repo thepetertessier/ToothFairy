@@ -6,11 +6,13 @@ public class GameRestarter : MonoBehaviour {
     private CameraFollow cameraFollow;
     private PlayerMovement playerMovement;
     [SerializeField] private GameObject gameOverScreen;
+    private AudioManager audioManager;
 
     private void Awake() {
         toothTracker = FindAnyObjectByType<ToothTracker>();
         cameraFollow = FindAnyObjectByType<CameraFollow>();
         playerMovement = FindAnyObjectByType<PlayerMovement>();
+        audioManager = FindAnyObjectByType<AudioManager>();
     }
     public void RestartGame() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -28,5 +30,6 @@ public class GameRestarter : MonoBehaviour {
             playerMovement.enabled = false;
         }
         gameOverScreen.SetActive(true);
+        audioManager.PlaySFX("roar");
     }
 }
