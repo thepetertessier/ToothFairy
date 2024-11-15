@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public interface IInitializable {
     void Initialize();
@@ -10,6 +11,7 @@ public class LevelSelector : MonoBehaviour {
     [SerializeField] private LevelConfig[] levelConfigs;
     [SerializeField] private FloorController floorController;
     [SerializeField] private ToothstalkerAI toothstalkerAI;
+    [SerializeField] private GameObject toothstalker;
     [SerializeField] private List<MonoBehaviour> initializables; // Store scripts that implement IInitializable
     private AudioManager audioManager;
 
@@ -47,15 +49,16 @@ public class LevelSelector : MonoBehaviour {
     }
 
     public void InitializeAll() {
-        foreach (var item in initializables) {
-            if (item is IInitializable initializable) {
-                initializable.Initialize();
-            }
+        foreach (IInitializable initializable in initializables.Cast<IInitializable>()) {
+            initializable.Initialize();
         }
     }
 
     private void ApplyLevelConfig(LevelConfig levelConfig) {
         floorController.SetColor(levelConfig.floorColor);
+
+        toothstalker.SetActive(levelConfig.toothstalkerExists);
+        toothstalker.GetComponent<ToothstalkerAudio>().maxVolume = levelConfig.toothstalkerExists ? 1.0f : 0.2f;
 
         // Set Toothstalker properties
         toothstalkerAI.SetStats(

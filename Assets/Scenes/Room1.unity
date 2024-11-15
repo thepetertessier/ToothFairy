@@ -3093,14 +3093,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd80132dcbdd5e4aa2aca11ae1d1245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: {fileID: 0}
+  currentLevel: {fileID: 11400000, guid: 5f3af4acdeeafef469fcda5fe31f30c3, type: 2}
   levelConfigs:
+  - {fileID: 11400000, guid: 5f3af4acdeeafef469fcda5fe31f30c3, type: 2}
   - {fileID: 11400000, guid: 410f20130f361f949bb28bc0cfdb85e1, type: 2}
   - {fileID: 11400000, guid: 3721a96b741df8a45a80a5d99e9dced1, type: 2}
   - {fileID: 11400000, guid: 2fc8f205d9b8eaf4db32e84c2e320a3c, type: 2}
   - {fileID: 11400000, guid: 61679114ac8832d49980adad2197d4db, type: 2}
   floorController: {fileID: 9084187990759455494}
   toothstalkerAI: {fileID: 3966777507281175229}
+  toothstalker: {fileID: 5333495083171633767}
   initializables:
   - {fileID: 790596491875604391}
   - {fileID: 2247839093894806400}
@@ -14797,7 +14799,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 299f12fb507475341a5520828e7dca70, type: 3}
   - {fileID: 8300000, guid: 3b77cfe09531a8240aa192f2173d7172, type: 3}
   - {fileID: 8300000, guid: 8894b54b66b5eff45afab88beff9f6c1, type: 3}
-  footstepInterval: 0.25
+  footstepInterval: 0.3
   volume: 0.7
 --- !u!1 &9198122149339624272
 GameObject:

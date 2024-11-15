@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Room4
   m_EditorClassIdentifier: 
   floorColor: {r: 0.15723258, g: 0.07441353, b: 0.07441353, a: 1}
+  toothstalkerExists: 1
   toothstalkerSpeed: 1.5
   toothstalkerPauseDuration: 1
   toothstalkerDetectionRadius: 2.2

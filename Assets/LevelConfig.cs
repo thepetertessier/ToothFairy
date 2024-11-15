@@ -4,6 +4,7 @@ using UnityEngine;
 public class LevelConfig : ScriptableObject
 {
     public Color floorColor;
+    public bool toothstalkerExists;
     public float toothstalkerSpeed;
     public float toothstalkerPauseDuration;
     public float toothstalkerDetectionRadius;

@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb478a8fd0c99db468ce6ad24c10a842, type: 3}
-  m_Name: Room1
+  m_Name: Room0
   m_EditorClassIdentifier: 
-  floorColor: {r: 0.52156866, g: 0.3254902, b: 0.08627451, a: 1}
-  toothstalkerExists: 1
+  floorColor: {r: 0.7138364, g: 0.6101928, b: 0.48374757, a: 1}
   toothstalkerSpeed: 0.5
   toothstalkerPauseDuration: 3
   toothstalkerDetectionRadius: 1.5
-  nextLevel: {fileID: 11400000, guid: 3721a96b741df8a45a80a5d99e9dced1, type: 2}
+  nextLevel: {fileID: 11400000, guid: 410f20130f361f949bb28bc0cfdb85e1, type: 2}
