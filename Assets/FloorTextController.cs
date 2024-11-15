@@ -123,4 +123,19 @@ public class FloorTextController : MonoBehaviour
             ));
         }
     }
+
+    public void DisplayPressE() {
+        if (displayCoroutine != null) StopCoroutine(displayCoroutine);
+        tmpText.text = "PRESS E";
+        tmpText.color = Color.red;
+        tmpText.fontSizeMax = 4;
+        tmpText.alpha = 1f;
+    }
+
+    public void StopDisplay() {
+        if (displayCoroutine != null) StopCoroutine(displayCoroutine);
+        tmpText.color = Color.white;
+        tmpText.fontSizeMax = 40;
+        tmpText.alpha = 0f;
+    }
 }

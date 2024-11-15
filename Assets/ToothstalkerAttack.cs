@@ -21,6 +21,7 @@ public class ToothstalkerAttack : MonoBehaviour {
     private RedCornersEffect redCornersEffect;
     private RedLightFlash redLightFlash;
     private CameraFollow cameraFollow;
+    private FloorTextController floorTextController;
 
     public bool JustFinished() {
         return justFinished;
@@ -36,6 +37,7 @@ public class ToothstalkerAttack : MonoBehaviour {
         redCornersEffect = FindAnyObjectByType<RedCornersEffect>();
         redLightFlash = FindAnyObjectByType<RedLightFlash>();
         cameraFollow = FindAnyObjectByType<CameraFollow>();
+        floorTextController = FindAnyObjectByType<FloorTextController>();
     }
 
     private void Update()
@@ -60,6 +62,7 @@ public class ToothstalkerAttack : MonoBehaviour {
         redCornersEffect.ActivateRedCorners();
         redLightFlash.StartFlashing();
         cameraFollow.ResetZoom();
+        floorTextController.DisplayPressE();
         Invoke(nameof(ZoomIn), 1f);
     }
 
@@ -129,6 +132,7 @@ public class ToothstalkerAttack : MonoBehaviour {
         cameraFollow.ResetZoom();
         audioManager.PlaySFX("post trauma");
         audioManager.SetSniffingActive(true);
+        floorTextController.StopDisplay();
     }
 
     private void RestartJustFinished() {

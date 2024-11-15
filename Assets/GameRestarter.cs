@@ -8,6 +8,7 @@ public class GameRestarter : MonoBehaviour {
     private AudioManager audioManager;
     private ToothstalkerAI toothstalkerAI;
     private ToothstalkerAttack toothstalkerAttack;
+    private FloorTextController floorTextController;
     private bool gameIsOver = false;
 
     private void Awake() {
@@ -16,6 +17,7 @@ public class GameRestarter : MonoBehaviour {
         audioManager = FindAnyObjectByType<AudioManager>();
         toothstalkerAI = FindAnyObjectByType<ToothstalkerAI>();
         toothstalkerAttack = FindAnyObjectByType<ToothstalkerAttack>();
+        floorTextController = FindAnyObjectByType<FloorTextController>();
     }
     public void RestartGame() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -37,6 +39,9 @@ public class GameRestarter : MonoBehaviour {
         }
         if (toothstalkerAttack != null) {
             toothstalkerAttack.enabled = false;
+        }
+        if (floorTextController != null) {
+            floorTextController.enabled = false;
         }
         gameOverScreen.SetActive(true);
         audioManager.StopSFX("dying");

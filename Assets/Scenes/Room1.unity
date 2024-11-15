@@ -3521,6 +3521,8 @@ MonoBehaviour:
   toothstalkerAI: {fileID: 3966777507281175229}
   toothstalker: {fileID: 5333495083171633767}
   initializables:
+  - {fileID: 1416427495}
+  - {fileID: 267800964555944287}
   - {fileID: 790596491875604391}
   - {fileID: 2247839093894806400}
   - {fileID: 2435500556238891885}
@@ -3568,6 +3570,7 @@ MonoBehaviour:
   opening: {fileID: 11400000, guid: 07847430bcdfd384d8964a6d20402429, type: 2}
   afterGettingTooth: {fileID: 11400000, guid: e5429380fd28aca45bd286c31818be27, type: 2}
   afterGettingKey: {fileID: 11400000, guid: c44e3fdd77fd20a4c8acbfb0f173f49f, type: 2}
+  ending: {fileID: 11400000, guid: 664fe676934de114283392a5f572fec4, type: 2}
 --- !u!43 &1433331544
 Mesh:
   m_ObjectHideFlags: 0
