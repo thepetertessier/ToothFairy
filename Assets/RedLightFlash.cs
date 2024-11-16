@@ -20,6 +20,7 @@ public class RedLightFlash : MonoBehaviour
     public void StopFlashing() {
         StopAllCoroutines();
         redLight.intensity = 0f; // Reset to normal intensity
+        isFlashing = false;
     }
 
     private IEnumerator FlashCoroutine() {
