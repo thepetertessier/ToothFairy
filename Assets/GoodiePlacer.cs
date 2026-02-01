@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GoodiePlacer : MonoBehaviour, IInitializable {
-    [SerializeField] private int teethToPlace = 5;
+    [SerializeField] private int teethToPlace = 4;
 
     private HashSet<string> bedsWithKey = new();
     private HashSet<string> bedsWithTeeth = new();

@@ -5,8 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ToothTracker : MonoBehaviour {
-    [SerializeField] private int initialTeethCount = 8;
-    [SerializeField] private int maxTeethCount = 10;
+    [SerializeField] private int initialTeethCount = 2;
+    [SerializeField] private int maxTeethCount = 8;
     private int teethCount;
     private TeethBarUI teethBarUI;
     private AudioManager audioManager;

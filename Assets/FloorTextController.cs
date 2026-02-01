@@ -19,7 +19,7 @@ public class FloorTextController : MonoBehaviour
 
     [Header("Display Settings")]
     [SerializeField] private float fadeDuration = 1f;
-    [SerializeField] private float defaultDuration = 1f;
+    [SerializeField] private float defaultDuration = 5f;
     [SerializeField] private float shakeIntensity = 0.05f;
     [SerializeField] private float flickerFrequency = 0.1f;
     [SerializeField] private float flickerIntensity = 0.2f;
@@ -72,6 +72,7 @@ public class FloorTextController : MonoBehaviour
         while (timer < displayTime)
         {
             timer += Time.deltaTime;
+            timer += flickerFrequency;  // Otherwise it's too slow
 
             // Shake Effect
             tmpText.transform.localPosition = Random.insideUnitCircle * shakeAmount;

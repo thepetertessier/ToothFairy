@@ -20,7 +20,7 @@ public class ToothstalkerAI : MonoBehaviour, IInitializable {
     [SerializeField] private float pauseDuration = 2f; // time in seconds to pause
     [SerializeField] private float alertRadius = 3f; // detection radius for player
     [SerializeField] private GameObject eyes;
-    [SerializeField] private float detectionMultiplier = 1.5f; // how much more it can detect when you are interacting
+    [SerializeField] private float detectionMultiplier = 2f; // how much more it can detect when you are interacting
     private readonly float offsetY = 0.37f;
 
     private ToothstalkerState currentState;

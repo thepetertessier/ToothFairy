@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TeethBarUI : MonoBehaviour {
-    [SerializeField] private Image[] toothImages; // Array to hold references to the 10 tooth images
+    [SerializeField] private Image[] toothImages; // Array to hold references to the 8 tooth images
 
     public void Initialize(int startingTeethCount, int maxTeethCount) {
         toothImages = new Image[maxTeethCount];
