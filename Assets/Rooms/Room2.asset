@@ -18,3 +18,4 @@ MonoBehaviour:
   toothstalkerPauseDuration: 2
   toothstalkerDetectionRadius: 1.7
   nextLevel: {fileID: 11400000, guid: 2fc8f205d9b8eaf4db32e84c2e320a3c, type: 2}
+  levelTitle: 'Level 2/4: The Green Room'

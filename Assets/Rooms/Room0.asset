@@ -18,3 +18,4 @@ MonoBehaviour:
   toothstalkerPauseDuration: 3
   toothstalkerDetectionRadius: 1.5
   nextLevel: {fileID: 11400000, guid: 410f20130f361f949bb28bc0cfdb85e1, type: 2}
+  levelTitle: 'Level 0/4: Tutorial'

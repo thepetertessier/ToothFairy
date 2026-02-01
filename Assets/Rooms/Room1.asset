@@ -18,3 +18,4 @@ MonoBehaviour:
   toothstalkerPauseDuration: 3
   toothstalkerDetectionRadius: 1.5
   nextLevel: {fileID: 11400000, guid: 3721a96b741df8a45a80a5d99e9dced1, type: 2}
+  levelTitle: 'Level 1/4: Alone?'

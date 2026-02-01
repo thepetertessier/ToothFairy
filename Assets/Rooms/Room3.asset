@@ -18,3 +18,4 @@ MonoBehaviour:
   toothstalkerPauseDuration: 2
   toothstalkerDetectionRadius: 2
   nextLevel: {fileID: 11400000, guid: 61679114ac8832d49980adad2197d4db, type: 2}
+  levelTitle: 'Level 3/4: Crimson Walls'

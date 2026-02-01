@@ -18,3 +18,4 @@ MonoBehaviour:
   toothstalkerPauseDuration: 1
   toothstalkerDetectionRadius: 2.2
   nextLevel: {fileID: 11400000, guid: 51a94eddc8b772d4c9bd4eb8f18e9541, type: 2}
+  levelTitle: 'Level 4/4: Midnight Ritual'

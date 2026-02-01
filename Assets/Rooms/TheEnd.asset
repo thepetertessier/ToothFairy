@@ -18,3 +18,4 @@ MonoBehaviour:
   toothstalkerPauseDuration: 1
   toothstalkerDetectionRadius: 2.2
   nextLevel: {fileID: 11400000}
+  levelTitle: The End!

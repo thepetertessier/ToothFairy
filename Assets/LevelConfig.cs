@@ -9,4 +9,5 @@ public class LevelConfig : ScriptableObject
     public float toothstalkerPauseDuration;
     public float toothstalkerDetectionRadius;
     public LevelConfig nextLevel;
+    public string levelTitle;
 }

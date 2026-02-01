@@ -14,10 +14,12 @@ public class LevelSelector : MonoBehaviour {
     [SerializeField] private GameObject toothstalker;
     [SerializeField] private List<MonoBehaviour> initializables; // Store scripts that implement IInitializable
     private AudioManager audioManager;
+    private LevelText levelText;
 
     private void Awake() {
         AutoPopulateInitializables();
         audioManager = FindAnyObjectByType<AudioManager>();
+        levelText = FindAnyObjectByType<LevelText>();
     }
 
     private void AutoPopulateInitializables() {
@@ -57,6 +59,7 @@ public class LevelSelector : MonoBehaviour {
 
     private void ApplyLevelConfig(LevelConfig levelConfig) {
         floorController.SetColor(levelConfig.floorColor);
+        levelText.SetText(levelConfig.levelTitle);
 
         toothstalker.SetActive(levelConfig.toothstalkerExists);
         toothstalker.GetComponent<ToothstalkerAudio>().maxVolume = levelConfig.toothstalkerExists ? 1.0f : 0.2f;

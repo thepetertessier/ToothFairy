@@ -850,6 +850,7 @@ GameObject:
   - component: {fileID: 250322006}
   - component: {fileID: 250322008}
   - component: {fileID: 250322007}
+  - component: {fileID: 250322009}
   m_Layer: 5
   m_Name: LevelText
   m_TagString: Untagged
@@ -973,6 +974,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 250322005}
   m_CullTransparentMesh: 1
+--- !u!114 &250322009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250322005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4de17671c05c440a53036ea92ec399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tmp: {fileID: 250322007}
 --- !u!1 &272106852
 GameObject:
   m_ObjectHideFlags: 0
@@ -3479,7 +3493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd80132dcbdd5e4aa2aca11ae1d1245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: {fileID: 11400000, guid: 5f3af4acdeeafef469fcda5fe31f30c3, type: 2}
+  currentLevel: {fileID: 11400000, guid: 61679114ac8832d49980adad2197d4db, type: 2}
   levelConfigs:
   - {fileID: 11400000, guid: 5f3af4acdeeafef469fcda5fe31f30c3, type: 2}
   - {fileID: 11400000, guid: 410f20130f361f949bb28bc0cfdb85e1, type: 2}
